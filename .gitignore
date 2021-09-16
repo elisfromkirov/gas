@@ -1,0 +1,22 @@
+# compiled object files
+*.a
+*.o
+
+# executable files
+*.out
+
+# macOS files
+*.DS_Store
+
+# object files directory
+obj/
+
+# executable files directory
+bin/
+
+# temporary directory
+tmp/
+temp/
+
+# Visual Studio Code directory
+.vscode/
