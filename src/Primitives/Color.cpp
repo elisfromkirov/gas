@@ -3,6 +3,14 @@
 
 #include "Color.hpp"
 
+Color& Color::operator+=(const Color& rhs) {
+    red   = std::min(red   + rhs.red,   1.0f);
+    green = std::min(green + rhs.green, 1.0f);
+    blue  = std::min(blue  + rhs.blue,  1.0f);
+
+    return *this;    
+}
+
 Color& Color::operator*=(const Color& rhs) {
     red   *= rhs.red;
     green *= rhs.green;
@@ -12,13 +20,19 @@ Color& Color::operator*=(const Color& rhs) {
 }
 
 Color& Color::operator*=(float intensity) {
-    intensity = std::max(intensity, 1.0f);
+    intensity = std::min(intensity, 1.0f);
     
     red   *= intensity;
     green *= intensity;
     blue  *= intensity;
 
     return *this;
+}
+
+Color operator+(const Color& lhs, const Color& rhs) {
+    Color result(lhs);
+    result += rhs;
+    return result;    
 }
 
 Color operator*(const Color& lhs, const Color& rhs) {

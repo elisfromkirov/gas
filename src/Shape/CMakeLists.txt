@@ -9,7 +9,6 @@ target_include_directories(RayTracer-Shape
 
 target_sources(RayTracer-Shape
     PUBLIC
-        ${INCROOT}/List.hpp
         ${INCROOT}/IShape.hpp
         ${INCROOT}/Sphere.hpp
         ${INCROOT}/ShapeManager.hpp

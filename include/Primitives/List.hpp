@@ -54,7 +54,12 @@ public:
 
     friend class Iterator;
 
+private:
+    static const uint32_t kDefaultCapacity{128};
+
 public:
+    List();
+
     List(uint32_t capacity);
 
     ~List();
@@ -91,6 +96,9 @@ template <typename T>
 using ListIterator = typename List<T>::Iterator;
 
 // -------------------------------------------------------------------------- //
+
+template <typename T>
+List<T>::List() : List(kDefaultCapacity) {}
 
 template <typename T>
 List<T>::List(uint32_t capacity)

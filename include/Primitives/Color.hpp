@@ -8,9 +8,13 @@ struct Color {
     float green;
     float blue;
 
+    Color& operator+=(const Color& rhs);
+
     Color& operator*=(const Color& rhs);
     Color& operator*=(float intensity);
 };
+
+Color operator+(const Color& lhs, const Color& rhs);
 
 Color operator*(const Color& lhs, const Color& rhs);
 Color operator*(const Color& lhs, float rhs);

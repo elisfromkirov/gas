@@ -1,7 +1,4 @@
-#include "List.hpp"
-#include "IShape.hpp"
 #include "ShapeManager.hpp"
-#include "RayTracer.hpp"
 
 ShapeManager::ShapeManager() : shapes_{kMaxShapeCount} {}
 

@@ -2,6 +2,7 @@
 #define __RAY_TRACER_HPP__
 
 #include "Color.hpp"
+#include "LightSource.hpp"
 #include "Vector3.hpp"
 #include "List.hpp"
 #include "IShape.hpp"
@@ -13,15 +14,19 @@ public:
 
     ~RayTracer();
 
-    void Trace(List<IShape*>& primitives);
-
     void Present();
+
+    void AddLightSource(LightSource* light_source);
+
+    void Trace(List<IShape*>& shapes);
 
 private:
     Color TraceRay(List<IShape*>& shapes, const Ray& ray);
+    Color ComputeColor(IShape* shape, const Ray& ray, const Vector3<float>& point);
 
     Surface surface_;
-    Vector3<float> light_;
+
+    List<LightSource*> light_sources_;
 };
 
 #endif // __RAY_TRACER_HPP__

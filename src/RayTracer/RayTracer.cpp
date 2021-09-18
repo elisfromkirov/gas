@@ -4,12 +4,20 @@
 #include <math.h>
 
 #include "Color.hpp"
+#include "Material.hpp"
 #include "RayTracer.hpp"
 
-RayTracer::RayTracer(Window& window)
-    : surface_{window}, light_{2.0f, -1.0f, 0.0f} {}
+RayTracer::RayTracer(Window& window) : surface_{window} {}
 
 RayTracer::~RayTracer() {}
+
+void RayTracer::Present() {
+    surface_.Update();
+}
+
+void RayTracer::AddLightSource(LightSource* light_source) {
+    light_sources_.InsertBack(light_source);
+}
 
 void RayTracer::Trace(List<IShape*>& shapes) {
     Ray ray{Vector3<float>{0.0, 0.0, 0.0}, Vector3<float>{0.0, 0.0, 0.0}};
@@ -28,10 +36,6 @@ void RayTracer::Trace(List<IShape*>& shapes) {
     }
 }
 
-void RayTracer::Present() {
-    surface_.Update();
-}
-
 Color RayTracer::TraceRay(List<IShape*>& shapes, const Ray& ray) {
     IShape* nearest_shape = nullptr;
 
@@ -47,19 +51,51 @@ Color RayTracer::TraceRay(List<IShape*>& shapes, const Ray& ray) {
             }
         }
     }
-    
+
     if (nearest_shape == nullptr) {
         return Color{0.0, 0.0, 0.0};
     }
-
-    // point of intersection of ray and primitive
-    Vector3<float> point {ray.origin + ray.direction * min_t}; 
     
-    // normal of primitive at the point of intersection
-    Vector3<float> normal{nearest_shape->GetNormal(point)}; 
-
-    return nearest_shape->GetColor();
+    return ComputeColor(nearest_shape, ray, Vector3<float>{ray.origin + ray.direction * min_t});
 }
+
+Color RayTracer::ComputeColor(IShape* shape, const Ray& ray, const Vector3<float>& point) {
+    assert(shape);
+
+    Vector3<float> direction{Normalize(ray.direction)};
+
+    Vector3<float> normal   {shape->GetNormal(point)};
+    Color          color    {shape->GetColor()      };
+    Material       material {shape->GetMaterial()   };
+
+    Color result{0.0, 0.0, 0.0};
+    for (auto iter = light_sources_.Begin(); iter != light_sources_.End(); ++iter) {
+        LightSource* light_source = *iter;
+
+        Vector3<float> point_light_direction{
+            Normalize(point - light_source->GetPosition())};
+
+        float diffuse_reflection_intensity = 
+            material.diffuse * DotProduct(point_light_direction, normal);
+        if (diffuse_reflection_intensity > 0.0) {
+            result += color * light_source->GetColor() * diffuse_reflection_intensity;
+        }
+
+        Vector3<float> reflected_light_direction{
+            normal * 2.0f * DotProduct(normal, point_light_direction) - point_light_direction};
+
+        float specular_diffuse_reflection = 
+            pow(DotProduct(reflected_light_direction, direction), material.specular);
+        if (specular_diffuse_reflection > 0.0f) {
+            result += color * specular_diffuse_reflection;
+        }
+    }
+
+    return result;
+}
+
+// point of intersection of ray and primitive
+// normal of primitive at the point of intersection
 
 /*
 float RayTracer::ComputeLights(const Vector& point, const Vector& normal, const Vector& direction, const Material& material) {    

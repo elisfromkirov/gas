@@ -2,8 +2,6 @@
 #define __SPHERE_HPP__
 
 #include "IShape.hpp"
-#include "Ray.hpp"
-#include "Vector3.hpp"
 
 class Sphere : public IShape {
 public:
