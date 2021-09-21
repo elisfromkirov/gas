@@ -1,6 +1,6 @@
 add_library(GasMath)
 
-set(INCROOT ${RayTracer_SOURCE_DIR}/include/Math)
+set(INCROOT ${Gas_SOURCE_DIR}/include/Math)
 
 target_include_directories(GasMath
     PUBLIC

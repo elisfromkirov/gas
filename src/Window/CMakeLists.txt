@@ -1,6 +1,6 @@
 add_library(GasWindow)
 
-set(INCROOT ${RayTracer_SOURCE_DIR}/include/Window)
+set(INCROOT ${Gas_SOURCE_DIR}/include/Window)
 
 find_package(SDL2 REQUIRED)
 
