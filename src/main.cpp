@@ -1,18 +1,47 @@
-#include "Sphere.hpp"
-#include "ShapeManager.hpp"
+#include "Primitive.hpp"
+#include "PrimitiveManager.hpp"
 #include "RayTracer.hpp"
+
+#include "PhysicsEventListener.hpp"
+
+#include "EventManager.hpp"
+
+#include "MoleculeEntity.hpp"
+#include "VesselEntity.hpp"
+
+#include "PhysicsComponent.hpp"
+#include "PhysicsComponentManager.hpp"
+#include "PhysicsEngine.hpp"
+
+#include "Surface.hpp"
 #include "Window.hpp"
 
 int main() {
-    Window window{"chemistry"};
+    EventManager event_manager{};
+
+    PhysicsEventListener physics_event_listener{};
+    event_manager.AddListener(&physics_event_listener);
+    
+    PhysicsEngine physics_engine{&event_manager};
+
+    Window window{"gas"};
     RayTracer ray_tracer{window};
 
-    ray_tracer.AddLightSource(new LightSource(Vector3<float>{2.0,  2.0, 0.0}, Color{1.0, 1.0, 1.0}));
+    PrimitiveManager primitive_manager{};
+    PhysicsManager   physics_manager{};
 
-    ShapeManager manager{};
-    manager.RegisterShape(new Sphere(Vector3<float>{ 0.0, -0.3,  3.0}, 0.7, Color{1.0, 0.0, 0.0}, Material{0.6, 1000, 0.2}));
-    manager.RegisterShape(new Sphere(Vector3<float>{ 2.0,  0.0,  4.0}, 0.7, Color{0.0, 1.0, 0.0}, Material{0.5,  500, 0.2}));
-    manager.RegisterShape(new Sphere(Vector3<float>{-2.0,  0.0,  4.0}, 0.7, Color{0.0, 0.0, 1.0}, Material{0.5,  800, 0.2}));
+    LightSource* light_source = new LightSource(
+        Vector3<float>{2.0,  2.0, 0.0}, Color{1.0, 1.0, 1.0});
+    primitive_manager.AddLightSource(light_source);
+
+    Sphere* sphere = new Sphere(
+        Vector3<float>{ 0.0, -0.3,  3.0}, 0.7, Color{1.0, 0.0, 0.0}, Material{0.6, 100, 0.2});
+    primitive_manager.AddPrimitive(sphere);
+
+    SpherePhysicsComponent* sphere_physics_component = new SpherePhysicsComponent(
+        SphereGeom{Vector3<float>{0.0, -0.3,  3.0}, 0.7}, Vector3<float>{0.0, 0.0, 0.0}, 0.0);
+
+    MoleculeEntity molecule{sphere, sphere_physics_component};
 
     bool running = true;
     while (running) {
@@ -21,11 +50,11 @@ int main() {
             if (event.type == SDL_QUIT) {
                 running = false;
             }
-        }        
-        
-        manager.DrawShapes(ray_tracer);
+        }
 
-        ray_tracer.Present();
+        physics_manager.SimulatePhysics(physics_engine);
+
+        primitive_manager.DrawPrimitives(ray_tracer);
     }
 
     return 0;

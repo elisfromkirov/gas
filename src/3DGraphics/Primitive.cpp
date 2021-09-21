@@ -1,9 +1,10 @@
 #include <math.h>
 #include <cassert>
 
-#include "Sphere.hpp"
+#include "Primitive.hpp"
 
-Sphere::Sphere(const Vector3<float>& center, float radius, const Color& color, const Material& material)
+Sphere::Sphere(const Vector3<float>& center, float radius, 
+               const Color& color, const Material& material)
     : center_(center), radius_(radius), color_(color), material_(material) {}
 
 Sphere::~Sphere() {}
@@ -11,7 +12,8 @@ Sphere::~Sphere() {}
 bool Sphere::RayIntersect(const Ray& ray, float* t) const {
     assert(t);
 
-    Vector3<float> origin_center = ray.origin - center_; // vector from ray's origin to sphere's center
+    // vector from ray's origin to Sphere's center
+    Vector3<float> origin_center = ray.origin - center_;
 
     float a = DotProduct(ray.direction, ray.direction);
     float b = DotProduct(origin_center, ray.direction);
@@ -36,4 +38,12 @@ const Color& Sphere::GetColor() const {
 
 const Material& Sphere::GetMaterial() const {
     return material_;
+}
+
+const Vector3<float>& Sphere::GetCenter() const {
+    return center_;
+}
+
+void Sphere::SetCenter(const Vector3<float>& center) {
+    center_ = center;
 }
