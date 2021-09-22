@@ -1,6 +1,10 @@
 #include "EventManager.hpp"
 
-void EventManager::DispatchAll() {    
+EventManager::EventManager() {}
+
+EventManager::~EventManager() {}
+
+void EventManager::DispatchAllEvents() {
     while (!queue_.empty()) {
         IEvent* event = queue_.front();
 
@@ -35,11 +39,7 @@ void EventManager::DispatchEvents(uint32_t category) {
         }
     }
 }
-    
-void EventManager::PostEvent(IEvent* event) {
-    queue_.push_back(event);
-}
 
-void EventManager::AddListener(IEventListener* listener, uint32_t categories) {
+void EventManager::RegisterListener(IEventListener* listener, uint32_t categories) {
     listeners_.push_back(Listener{listener, categories});
 }

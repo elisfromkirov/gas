@@ -8,16 +8,20 @@
 
 class EventManager {
 public:
-    void DispatchAll();
+    EventManager();
+    ~EventManager();
+
+    void DispatchAllEvents();
 
     void DispatchEvents(uint32_t category);
 
-    void PostEvent(IEvent* event);
+    template <typename EventT, typename... Args>
+    void PostEvent(Args&&... args);
 
-    void AddListener(IEventListener* listener, uint32_t categories = kAllEventCategories);
+    void RegisterListener(IEventListener* listener, uint32_t categories = kAllEventCategories);
 
 private:
-    std::list<IEvent*>  queue_;
+    std::list<IEvent*> queue_;
 
     struct Listener {
         IEventListener* listener;
@@ -25,5 +29,12 @@ private:
     };
     std::list<Listener> listeners_;
 };
+
+template <class EventT, class... Args>
+void EventManager::PostEvent(Args&&... args) {
+    auto event = new EventT(std::forward<Args>(args)...);
+
+    queue_.push_back(event);
+}
 
 #endif // __EVENT_MANAGER_HPP__

@@ -3,17 +3,15 @@
 PhysicsManager::PhysicsManager() {}
 
 PhysicsManager::~PhysicsManager() {
-    for (auto iterator = data_.begin(); iterator != data_.end(); ++iterator) {
-        PhysicsEngine::Data record = *iterator;
-
-        delete record.component;
+    for (auto& component : components_) {
+        delete component.component;
     }
 }
 
 void PhysicsManager::AddPhysicsComponent(IPhysicsComponent* component, IPhysicsEntity* entity) {
-    data_.push_back(PhysicsEngine::Data{component, entity});
+    components_.push_back(Component{component, entity});
 }
 
 void PhysicsManager::SimulatePhysics(PhysicsEngine& physics_engine) {
-    physics_engine.SimulatePhysics(data_);
+    physics_engine.SimulatePhysics(components_);
 }

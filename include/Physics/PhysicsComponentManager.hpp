@@ -16,7 +16,7 @@ public:
     void SimulatePhysics(PhysicsEngine& physics_engine);
 
 private:
-    std::list<PhysicsEngine::Data> data_;
+    std::list<Component> components_;
 };
 
 #endif // __PHYSICS_COMPONENT_MANAGER_HPP__

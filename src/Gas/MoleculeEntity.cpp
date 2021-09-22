@@ -1,5 +1,7 @@
 #include "MoleculeEntity.hpp"
 
+#include <stdio.h>
+
 MoleculeEntity::MoleculeEntity(Sphere* sphere, SpherePhysicsComponent* physics_component) 
     : sphere_{sphere}, physics_component_{physics_component} {}
 

@@ -6,22 +6,22 @@
 #include "EventManager.hpp"
 #include "IPhysicsEntity.hpp"
 #include "PhysicsComponent.hpp"
+#include "PhysicsEventListener.hpp"
+
+struct Component {
+    IPhysicsComponent* component;
+    IPhysicsEntity*    entity;
+};
 
 class PhysicsEngine {
-public:
-    struct Data {
-        IPhysicsComponent* component;
-        IPhysicsEntity*    entity; 
-    };
-
 public:
     PhysicsEngine(EventManager* event_manager);
     ~PhysicsEngine();
 
-    void SimulatePhysics(std::list<Data>& data);
+    void SimulatePhysics(std::list<Component>& data);
 
 private:
-    EventManager* event_manager_;
+    EventManager*        event_manager_;
 };
 
 // -------------------------------------------------------------------------- //
