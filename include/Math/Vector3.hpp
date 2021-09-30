@@ -120,6 +120,13 @@ T DotProduct(const Vector3<T>& lhs, const Vector3<T>& rhs) {
     return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
 }
 
+template <typename T>
+Vector3<T> CrossProduct(const Vector3<T>& lhs, const Vector3<T>& rhs) {
+    return Vector3<T>{lhs.y * rhs.z - lhs.z * rhs.y, 
+                      lhs.z * rhs.x - lhs.x * rhs.z,
+                      lhs.x * rhs.y - lhs.y * rhs.x};
+}
+
 float GetLength(const Vector3<float>& vector);
 
 Vector3<float> Normalize(const Vector3<float>& vector);

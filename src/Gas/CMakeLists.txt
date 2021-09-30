@@ -9,17 +9,17 @@ target_include_directories(GasGas
 
 target_sources(GasGas
     PUBLIC
-        ${INCROOT}/MoleculeEntity.hpp
-        ${INCROOT}/VesselEntity.hpp
+        ${INCROOT}/Molecule.hpp
+        ${INCROOT}/MoleculeManager.hpp
     PRIVATE
-        MoleculeEntity.cpp
-        VesselEntity.cpp
+        Molecule.cpp
+        MoleculeManager.cpp
     )
 
 target_link_libraries(GasGas
     PUBLIC
-        Gas3DGraphics
-        GasEntity
         GasMath
-        GasPhysics
+        Gas3DGraphics
+    PRIVATE
+        m
     )

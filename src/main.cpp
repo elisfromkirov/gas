@@ -1,50 +1,28 @@
-#include <unistd.h>
-
-#include "Primitive.hpp"
-#include "PrimitiveManager.hpp"
+#include "IPrimitive.hpp"
+#include "Sphere.hpp"
+#include "Scene.hpp"
 #include "RayTracer.hpp"
 
-#include "PhysicsEventListener.hpp"
-
-#include "EventManager.hpp"
-
-#include "MoleculeEntity.hpp"
-#include "VesselEntity.hpp"
-
-#include "PhysicsComponent.hpp"
-#include "PhysicsComponentManager.hpp"
-#include "PhysicsEngine.hpp"
+#include "Molecule.hpp"
+#include "MoleculeManager.hpp"
 
 #include "Window.hpp"
 
 int main() {
-    EventManager event_manager{};
+    Window window{"ray tracer", 0, 0, 800, 600};
 
-    PhysicsEngine physics_engine{&event_manager};
-    PhysicsEventListener physics_event_listener{};
-    event_manager.RegisterListener(&physics_event_listener);
+    RayTracer ray_tracer{window.GetWindowSurface()};
+    Scene scene{};
 
-    PrimitiveManager primitive_manager{};
-    PhysicsManager   physics_manager{};
+    LightSource dynamic_light{Vector3<float>{2.0, -3.0, 0.0}, Color{1.0, 1.0, 1.0}};
+    scene.AddLightSource(&dynamic_light);
 
-    Window window{"gas"};
-    RayTracer ray_tracer{window};
-
-    LightSource* light_source = new LightSource(
-        Vector3<float>{2.0,  2.0, 0.0}, Color{1.0, 1.0, 1.0});
-    primitive_manager.AddLightSource(light_source);
-
-    Sphere* sphere = new Sphere(
-        Vector3<float>{ 0.0, -0.3,  3.0}, 0.7, Color{1.0, 0.0, 0.0}, Material{0.6, 100, 0.2});
-    
-    SpherePhysicsComponent* sphere_physics_component = new SpherePhysicsComponent(
-        SphereGeom{Vector3<float>{0.0, -0.3,  3.0}, 0.7}, Vector3<float>{0.0, 0.0, 1.0}, 0.0);
-
-    MoleculeEntity molecule{sphere, sphere_physics_component};
-    primitive_manager.AddPrimitive(sphere);
-    physics_manager.AddPhysicsComponent(sphere_physics_component, &molecule);
+    Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 500};
+    Sphere sphere{Vector3<float>{ 0.0, -0.3,  3.0}, 0.7, &material};
+    scene.AddPrimitive(&sphere);
 
     bool running = true;
+    Vector3<float> position{2.0, -2.0, 0.0};
     while (running) {
         SDL_Event event{};
         while (SDL_PollEvent(&event)) {
@@ -53,13 +31,15 @@ int main() {
             }
         }
 
-        physics_manager.SimulatePhysics(physics_engine);
+        ray_tracer.TraceScene(&scene);
 
-        event_manager.DispatchAllEvents();
+        window.UpdateWindowSurface();
 
-        primitive_manager.DrawPrimitives(ray_tracer);
-
-        usleep(1000);
+        float x = position.x;
+        float y = position.y;
+        position.x = x * 0.999 - y * 0.017;
+        position.y = y * 0.999 + x * 0.017;
+        dynamic_light.SetPosition(position);
     }
 
     return 0;

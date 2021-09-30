@@ -19,19 +19,13 @@ target_sources(Gas
 target_link_libraries(Gas
     PUBLIC
         Gas3DGraphics
-        GasEntity
-        GasEvent
         GasGas
         GasMath
-        GasPhysics
-        GasWindow
+        GasPlatform
         ${SDL2_LIBRARIES}
     )
 
-add_subdirectory(src/3DGraphics)
-add_subdirectory(src/Entity)
-add_subdirectory(src/Event)
+add_subdirectory(src/RayTracer)
 add_subdirectory(src/Gas)
 add_subdirectory(src/Math)
-add_subdirectory(src/Physics)
-add_subdirectory(src/Window)
+add_subdirectory(src/Platform)
