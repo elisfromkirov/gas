@@ -3,8 +3,8 @@
 
 #include <cassert>
 
-#include "Material.hpp"
 #include "IPrimitive.hpp"
+#include "Vector3.hpp"
 
 class Sphere : public IPrimitive {
 public:

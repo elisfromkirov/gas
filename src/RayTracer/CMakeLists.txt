@@ -17,12 +17,14 @@ target_sources(Gas3DGraphics
         ${INCROOT}/RayTracer.hpp
         ${INCROOT}/Scene.hpp
         ${INCROOT}/Sphere.hpp
+        ${INCROOT}/Triangle.hpp
     PRIVATE
         Color.cpp
         LightSource.cpp
         RayTracer.cpp
         Scene.cpp
         Sphere.cpp
+        Triangle.cpp
     )
 
 target_link_libraries(Gas3DGraphics

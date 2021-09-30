@@ -5,7 +5,7 @@ template <typename T>
 struct Vector2 {
     Vector2();
 
-    Vector2(const T& x, const T& y);
+    Vector2(T x, T y);
 
     Vector2(const Vector2& other);
 
@@ -17,7 +17,7 @@ struct Vector2 {
 
     Vector2& operator-=(const Vector2& rhs);
 
-    Vector2& operator*=(const T& rhs);
+    Vector2& operator*=(T rhs);
 
     T x;
     T y;
@@ -30,7 +30,7 @@ template <typename T>
 Vector2<T> operator-(const Vector2<T>& lhs, const Vector2<T>& rhs);
 
 template <typename T>
-Vector2<T> operator*(const Vector2<T>& lhs, const T& rhs);
+Vector2<T> operator*(const Vector2<T>& lhs, T rhs);
 
 template <typename T>
 T DotProduct(const Vector2<T>& lhs, const Vector2<T>& rhs);
@@ -45,7 +45,7 @@ template <typename T>
 Vector2<T>::Vector2() : x{}, y{} {}
 
 template <typename T>
-Vector2<T>::Vector2(const T& x, const T& y) : x{x}, y{y} {}
+Vector2<T>::Vector2(T x, T y) : x{x}, y{y} {}
 
 template <typename T>
 Vector2<T>::Vector2(const Vector2& other) : x{other.x}, y{other.y} {}
@@ -82,7 +82,7 @@ Vector2<T>& Vector2<T>::operator-=(const Vector2& rhs) {
 }
 
 template <typename T>
-Vector2<T>& Vector2<T>::operator*=(const T& rhs) {
+Vector2<T>& Vector2<T>::operator*=(T rhs) {
     x *= rhs;
     y *= rhs;
 
@@ -104,7 +104,7 @@ Vector2<T> operator-(const Vector2<T>& lhs, const Vector2<T>& rhs) {
 }
 
 template <typename T>
-Vector2<T> operator*(const Vector2<T>& lhs, const T& rhs) {
+Vector2<T> operator*(const Vector2<T>& lhs, T rhs) {
     Vector2<T> result(lhs);
     result *= rhs;
     return result;

@@ -42,7 +42,9 @@ Color RayTracer::TraceRay(const Scene* scene, const Ray& ray) {
 
     if (nearest_primitive == nullptr) {
         return Color{0.0, 0.0, 0.0};
-    }
+    }/* else {
+         return Color{1.0, 1.0, 1.0};
+    }*/
     
     Vector3<float> intersection_point{ray.origin + ray.direction * min_t};
     return ComputeColor(scene, ray, nearest_primitive, intersection_point);

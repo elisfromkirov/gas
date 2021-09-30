@@ -1,6 +1,7 @@
 #include "IPrimitive.hpp"
 #include "Sphere.hpp"
 #include "Scene.hpp"
+#include "Triangle.hpp"
 #include "RayTracer.hpp"
 
 #include "Molecule.hpp"
@@ -18,8 +19,15 @@ int main() {
     scene.AddLightSource(&dynamic_light);
 
     Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 500};
-    Sphere sphere{Vector3<float>{ 0.0, -0.3,  3.0}, 0.7, &material};
-    scene.AddPrimitive(&sphere);
+
+    scene.AddPrimitive(new Triangle(Vector3<float>{0.0, 0.0, 3.0}, 
+                                    Vector3<float>{0.0, 1.0, 3.0},
+                                    Vector3<float>{1.0, 0.0, 3.0}, 
+                                    &material));
+    scene.AddPrimitive(new Triangle(Vector3<float>{1.0, 0.0, 3.0}, 
+                                    Vector3<float>{0.0, 1.0, 3.0},
+                                    Vector3<float>{1.0, 1.0, 3.0},
+                                    &material));
 
     bool running = true;
     Vector3<float> position{2.0, -2.0, 0.0};
@@ -34,12 +42,6 @@ int main() {
         ray_tracer.TraceScene(&scene);
 
         window.UpdateWindowSurface();
-
-        float x = position.x;
-        float y = position.y;
-        position.x = x * 0.999 - y * 0.017;
-        position.y = y * 0.999 + x * 0.017;
-        dynamic_light.SetPosition(position);
     }
 
     return 0;

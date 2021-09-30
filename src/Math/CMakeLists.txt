@@ -9,6 +9,7 @@ target_include_directories(GasMath
 
 target_sources(GasMath
     PUBLIC
+        ${INCROOT}/Matrix2x2.hpp
         ${INCROOT}/Vector2.hpp
         ${INCROOT}/Vector3.hpp
     PRIVATE
