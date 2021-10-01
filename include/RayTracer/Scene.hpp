@@ -10,9 +10,9 @@ class RayTracer;
 
 class Scene {
 public:
-    void AddPrimitive(IPrimitive* primitive);
+    void RegisterPrimitive(IPrimitive* primitive);
 
-    void AddLightSource(LightSource* light_source);
+    void RegisterLightSource(LightSource* light_source);
 
 private:
     std::list<IPrimitive*>  primitives_;

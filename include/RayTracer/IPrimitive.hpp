@@ -7,7 +7,7 @@
 
 class IPrimitive {
 public:
-    virtual ~IPrimitive() {}
+    virtual ~IPrimitive() = default;
 
     virtual bool RayIntersect(const Ray& ray, float* t) const = 0;
 

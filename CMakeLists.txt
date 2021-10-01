@@ -18,14 +18,16 @@ target_sources(Gas
 
 target_link_libraries(Gas
     PUBLIC
-        Gas3DGraphics
+        GasComponents
         GasGas
+        Gas3DGraphics
         GasMath
         GasPlatform
         ${SDL2_LIBRARIES}
     )
 
+add_subdirectory(src/Components)
+add_subdirectory(src/Gas)    
 add_subdirectory(src/RayTracer)
-add_subdirectory(src/Gas)
 add_subdirectory(src/Math)
 add_subdirectory(src/Platform)

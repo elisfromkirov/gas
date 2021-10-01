@@ -13,7 +13,7 @@ public:
     Triangle(const Vector3<float>& p1, const Vector3<float>& p2,
              const Vector3<float>& p3, const Material* material);
 
-    virtual ~Triangle();
+    virtual ~Triangle() override;
 
     virtual bool RayIntersect(const Ray& ray, float* t) const override;
 

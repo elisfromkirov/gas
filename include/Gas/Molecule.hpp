@@ -1,25 +1,24 @@
 #ifndef __MOLECULE_HPP__
 #define __MOLECULE_HPP__
 
-#include "IPrimitive.hpp"
-#include "Sphere.hpp"
+#include "GraphicsComponent.hpp"
 
 class IMolecule {
 public:
     virtual ~IMolecule() {}
 
-    virtual IPrimitive* GetGraphicsComponent() = 0;
+    virtual IGraphicsComponent* GetGraphicsComponent() = 0;
 };
 
 class SphereMolecule : public IMolecule {
 public:
     SphereMolecule(const Vector3<float>& center, float radius, const Material* material);
-    virtual ~SphereMolecule();
+    virtual ~SphereMolecule() override = default;
 
-    virtual IPrimitive* GetGraphicsComponent() override;
+    virtual IGraphicsComponent* GetGraphicsComponent() override;
 
 private:
-    Sphere sphere_;
+    SphereGraphicsComponent graphics_component_;
 };
 
 #endif // __MOLECULE_HPP__

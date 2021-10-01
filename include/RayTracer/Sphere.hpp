@@ -19,7 +19,6 @@ public:
     virtual const Material* GetMaterial() const override;
 
     const Vector3<float>& GetCenter() const;
-
     void SetCenter(const Vector3<float>& center);
 
 private:

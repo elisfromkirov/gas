@@ -13,7 +13,7 @@ void MoleculeManager::AddMolecule(IMolecule* molecule) {
     assert(molecule != nullptr);
 
     molecules_.push_back(molecule);
-    scene_->AddPrimitive(molecule->GetGraphicsComponent());
+    molecule->GetGraphicsComponent()->RegisterOnScene(scene_);
 }
 
 void MoleculeManager::DrawMolecules() const {

@@ -20,6 +20,7 @@ target_link_libraries(GasGas
     PUBLIC
         GasMath
         Gas3DGraphics
+        GasComponents
     PRIVATE
         m
     )

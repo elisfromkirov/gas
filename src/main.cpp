@@ -16,18 +16,12 @@ int main() {
     Scene scene{};
 
     LightSource dynamic_light{Vector3<float>{2.0, -3.0, 0.0}, Color{1.0, 1.0, 1.0}};
-    scene.AddLightSource(&dynamic_light);
+    scene.RegisterLightSource(&dynamic_light);
 
     Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 500};
 
-    scene.AddPrimitive(new Triangle(Vector3<float>{0.0, 0.0, 3.0}, 
-                                    Vector3<float>{0.0, 1.0, 3.0},
-                                    Vector3<float>{1.0, 0.0, 3.0}, 
-                                    &material));
-    scene.AddPrimitive(new Triangle(Vector3<float>{1.0, 0.0, 3.0}, 
-                                    Vector3<float>{0.0, 1.0, 3.0},
-                                    Vector3<float>{1.0, 1.0, 3.0},
-                                    &material));
+    MoleculeManager molecule_manager{&ray_tracer, &scene};
+    molecule_manager.AddMolecule(new SphereMolecule(Vector3<float>{ 0.0, -0.3,  3.0}, 0.7, &material));
 
     bool running = true;
     Vector3<float> position{2.0, -2.0, 0.0};
