@@ -14,7 +14,7 @@ public:
 
     void AddMolecule(IMolecule* molecule);
 
-    void DrawMolecules() const;
+    void DrawMolecules();
 
 private:
     std::list<IMolecule*> molecules_;

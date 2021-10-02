@@ -12,13 +12,17 @@ public:
     RayTracer(WindowSurface window_surface);
     ~RayTracer();
 
-    void TraceScene   (const Scene* scene);
+    void Trace         (      Scene* scene);
 
 private:
-    Color TraceRay    (const Scene* scene, const Ray& ray);
+    void TransformScene(      Scene* scene);
 
-    Color ComputeColor(const Scene* scene, const Ray& ray, const IPrimitive* primitive,
-                       const Vector3<float>& intersection_point);
+    void TraceScene    (const Scene* scene);    
+
+    Color TraceRay     (const Scene* scene, const Ray& ray);
+
+    Color ComputeColor (const Scene* scene, const Ray& ray, const IPrimitive* primitive,
+                        const Vector3<float>& intersection_point);
 
 private:
     WindowSurface window_surface_;

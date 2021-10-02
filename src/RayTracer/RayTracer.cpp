@@ -8,7 +8,22 @@ RayTracer::RayTracer(WindowSurface window_surface)
 
 RayTracer::~RayTracer() {}
 
-void RayTracer::TraceScene(const Scene* scene) {
+void RayTracer::Trace(Scene* scene) {
+    TransformScene(scene);
+    TraceScene(scene);
+}
+
+void RayTracer::TransformScene(Scene* scene) {
+    for (auto primitive : scene->primitives_) {
+        primitive->TransformToCameraSpace(scene->camera_->GetVeiwMatrix());
+    }
+
+    for (auto light_source : scene->light_sources_) {
+        light_source->TransformToCameraSpace(scene->camera_->GetVeiwMatrix());
+    }
+}
+
+void RayTracer::TraceScene(const Scene* scene) {    
     Ray ray{Vector3<float>{0.0, 0.0, 0.0}, Vector3<float>{0.0, 0.0, 0.0}};
 
     int32_t width  = static_cast<int32_t>(window_surface_.GetWidth());

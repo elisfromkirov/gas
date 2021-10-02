@@ -4,6 +4,8 @@
 #include <cassert>
 
 #include "IPrimitive.hpp"
+#include "SpaceDepenedentData.hpp"
+#include "Matrix4x4.hpp"
 #include "Vector3.hpp"
 
 class Sphere : public IPrimitive {
@@ -18,14 +20,13 @@ public:
     
     virtual const Material* GetMaterial() const override;
 
-    const Vector3<float>& GetCenter() const;
-    void SetCenter(const Vector3<float>& center);
+    virtual void TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) override;
 
 private:
-    Vector3<float> center_;
-    float          radius_;
+    SpaceDependentData<Vector3<float>> center_;
+    SpaceDependentData<float>          radius_;
 
-    const Material* material_;  
+    const Material* material_;
 };
 
 #endif // __SPHERE_HPP__

@@ -15,13 +15,15 @@ int main() {
     RayTracer ray_tracer{window.GetWindowSurface()};
     Scene scene{};
 
+    Camera camera{};
+    scene.RegisterCamera(&camera);
+
     LightSource dynamic_light{Vector3<float>{2.0, -3.0, 0.0}, Color{1.0, 1.0, 1.0}};
     scene.RegisterLightSource(&dynamic_light);
 
     Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 500};
-
-    MoleculeManager molecule_manager{&ray_tracer, &scene};
-    molecule_manager.AddMolecule(new SphereMolecule(Vector3<float>{ 0.0, -0.3,  3.0}, 0.7, &material));
+    Sphere sphere(Vector3<float>{ 0.0, 0.0, 0.0}, 0.7, &material);
+    scene.RegisterPrimitive(&sphere);
 
     bool running = true;
     Vector3<float> position{2.0, -2.0, 0.0};
@@ -33,7 +35,7 @@ int main() {
             }
         }
 
-        ray_tracer.TraceScene(&scene);
+        ray_tracer.Trace(&scene);    
 
         window.UpdateWindowSurface();
     }

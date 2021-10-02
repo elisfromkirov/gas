@@ -1,13 +1,15 @@
 #ifndef __MATRIX2X2_HPP__
 #define __MATRIX2X2_HPP__
 
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
 
 template <typename T>
 struct Matrix2x2 {
-    Matrix2x2();    
+    static const uint32_t kMatrixSize{2};
 
-    Matrix2x2(const T& m00, const T& m01, const T& m10, const T& m11);
+    Matrix2x2();    
 
     Matrix2x2(const Matrix2x2& other);
 
@@ -27,7 +29,7 @@ struct Matrix2x2 {
 
     const T* operator[](uint32_t i) const;
 
-    T m[4];
+    T m[kMatrixSize * kMatrixSize];
 };
 
 template <typename T>
@@ -54,12 +56,9 @@ template <typename T>
 Matrix2x2<T>::Matrix2x2() : m{} {}
 
 template <typename T>
-Matrix2x2<T>::Matrix2x2(const T& m00, const T& m01, const T& m10, const T& m11)
-    : m{m00, m01, m10, m11} {}
-
-template <typename T>
-Matrix2x2<T>::Matrix2x2(const Matrix2x2& other)
-    : m{other.m[0], other.m[1], other.m[2], other.m[3]} {}
+Matrix2x2<T>::Matrix2x2(const Matrix2x2& other) : m{} {
+    std::copy(other.m, other.m + kMatrixSize * kMatrixSize, m);
+}
 
 template <typename T>
 Matrix2x2<T>::~Matrix2x2() {}
@@ -70,7 +69,7 @@ Matrix2x2<T>& Matrix2x2<T>::operator=(const Matrix2x2& other) {
         return *this;
     }
 
-    m = {other.m[0], other.m[1], other.m[2], other.m[3]};
+    std::copy(other.m, other.m + kMatrixSize * kMatrixSize, m);
 
     return *this;
 }
@@ -119,16 +118,16 @@ Matrix2x2<T>& Matrix2x2<T>::operator*=(T rhs) {
 
 template <typename T>
 T* Matrix2x2<T>::operator[](uint32_t i) {
-    assert(i < 2);
+    assert(i < kMatrixSize);
     
-    return &m[i*2];
+    return &m[i * kMatrixSize];
 }
 
 template <typename T>
 const T* Matrix2x2<T>::operator[](uint32_t i) const {
-    assert(i < 2);
+    assert(i < kMatrixSize);
     
-    return &m[i*2];
+    return &m[i * kMatrixSize];
 }
 
 template <typename T>

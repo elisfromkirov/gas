@@ -16,6 +16,6 @@ void MoleculeManager::AddMolecule(IMolecule* molecule) {
     molecule->GetGraphicsComponent()->RegisterOnScene(scene_);
 }
 
-void MoleculeManager::DrawMolecules() const {
-    ray_tracer_->TraceScene(scene_);
+void MoleculeManager::DrawMolecules() {
+    ray_tracer_->Trace(scene_);
 }

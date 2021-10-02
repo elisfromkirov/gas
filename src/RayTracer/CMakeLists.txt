@@ -9,6 +9,7 @@ target_include_directories(Gas3DGraphics
 
 target_sources(Gas3DGraphics
     PUBLIC
+        ${INCROOT}/Camera.hpp
         ${INCROOT}/Color.hpp
         ${INCROOT}/IPrimitive.hpp
         ${INCROOT}/LightSource.hpp
@@ -19,6 +20,7 @@ target_sources(Gas3DGraphics
         ${INCROOT}/Sphere.hpp
         ${INCROOT}/Triangle.hpp
     PRIVATE
+        Camera.cpp
         Color.cpp
         LightSource.cpp
         RayTracer.cpp
