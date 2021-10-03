@@ -18,19 +18,18 @@ int main() {
     Camera camera{};
     scene.RegisterCamera(&camera);
 
-    LightSource light{Vector3<float>{2.0, -3.0, 0.0}, Color{1.0, 1.0, 1.0}};
+    LightSource light{Vector3<float>{2.0, 1.0, -1.0}, Color{1.0, 1.0, 1.0}};
     scene.RegisterLightSource(&light);
 
-    Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 500};
+    Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 200};
 
-    // Sphere sphere(Vector3<float>{ 0.0, 0.0, 0.0}, 0.7, &material);
+    // Sphere sphere(Vector3<float>{0.0, 0.0, 0.0}, 0.7, &material);
     // scene.RegisterPrimitive(&sphere);
 
-    Box box{Vector3<float>{-0.5, 0.0, +1}, Vector3<float>{0.5, 0.5, 0.5}, &material};
+    Box box{Vector3<float>{0.0, -0.5, 0.4}, Vector3<float>{0.5, 0.5, 0.5}, &material};
     scene.RegisterPrimitive(&box);
 
     bool running = true;
-    Vector3<float> position{2.0, -2.0, 0.0};
     while (running) {
         SDL_Event event{};
         while (SDL_PollEvent(&event)) {

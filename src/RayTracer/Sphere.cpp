@@ -21,7 +21,15 @@ bool Sphere::RayIntersect(const Ray& ray, float* t) const {
         return false;
     }
 
-    *t = (- b - sqrt(d)/a);
+    float t1 = - b - sqrt(d)/a;
+    float t2 = - b + sqrt(d)/a;
+
+    if (0.f < t1 && t1 < 1.f) {
+        *t = t2; 
+    } else {
+        *t = t1;
+    }
+
     return true;
 }
 

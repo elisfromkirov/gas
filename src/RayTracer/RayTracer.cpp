@@ -60,7 +60,7 @@ Color RayTracer::TraceRay(const Scene* scene, const Ray& ray) {
         return Color{0.0, 0.0, 0.0};
     } /* else {
         return Color{1.0, 1.0, 1.0};
-    } */
+    }*/
     
     Vector3<float> intersection_point{ray.origin + ray.direction * min_t};
     return ComputeColor(scene, ray, nearest_primitive, intersection_point);
@@ -72,15 +72,16 @@ Color RayTracer::ComputeColor(const Scene* scene, const Ray& ray, const IPrimiti
 
     const Material* material{primitive->GetMaterial()};
 
-    Vector3<float> direction{Normalize(ray.direction)   };
+    Vector3<float> direction{Normalize(ray.direction * (-1.f))};
     Vector3<float> normal   {primitive->GetNormal(point)};
 
     Color result{0.0, 0.0, 0.0};
 
     for (auto light_source : scene->light_sources_) {
-        Vector3<float> direction_to_light{Normalize(point - light_source->GetPosition())};
-        
+        Vector3<float> direction_to_light{Normalize(light_source->GetPosition() - point)};
+
         float diffuse_reflection = DotProduct(direction_to_light, normal);
+
         if (diffuse_reflection > 0.0) {
             result += material->diffuse_color * light_source->GetColor() * diffuse_reflection;
         }
@@ -88,9 +89,10 @@ Color RayTracer::ComputeColor(const Scene* scene, const Ray& ray, const IPrimiti
         Vector3<float> reflected_light{
             normal * 2.0f * DotProduct(normal, direction_to_light) - direction_to_light};
 
-        float specular_reflection = pow(DotProduct(reflected_light, direction), material->specular);
+        float specular_reflection = DotProduct(reflected_light, direction);
         if (specular_reflection > 0.0 && diffuse_reflection > 0.0) {
-            result += material->specular_color * light_source->GetColor() * specular_reflection;
+            result += material->specular_color * light_source->GetColor() * 
+                      pow(specular_reflection, material->specular);
         }
     }
 

@@ -34,12 +34,15 @@ bool Box::RayIntersect(const Ray& ray, float* t) const {
     float min_t = FLT_MAX;
     bool intersected = false;
 
+    uint32_t index = 0;
+
     for (uint32_t i = 0; i < kSurfaceCount; ++i) {
         float cur_t = FLT_MAX;
         if (BoxSideRayIntersect(i, ray, &cur_t)) {
             if (cur_t < min_t) {
                 min_t = cur_t;
                 intersected = true;
+                index = i;
             }
         }
     }
@@ -68,19 +71,6 @@ void Box::TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix,
     for (uint32_t i = 0; i < kSurfaceCount; ++i) {
         surfaces_[i].camera_space.normal = inverse_veiw_matrix * surfaces_[i].world_space.normal;
         surfaces_[i].camera_space.point  =         veiw_matrix * surfaces_[i].world_space.point;
-    }
-
-    static bool dumped = false;
-    if (!dumped) {
-        dumped =true;
-
-        for (uint32_t i = 0; i < kSurfaceCount; ++i) {
-            #define PRINT_VECTOR(vector) printf("{%lg %lg %lg}\n", vector.x, vector.y, vector.z)        
-
-            PRINT_VECTOR(surfaces_[i].camera_space.normal);
-
-            #undef PRINT_VECTOR
-        }
     }
 }
 
