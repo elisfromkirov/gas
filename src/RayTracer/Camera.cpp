@@ -7,8 +7,12 @@ Camera::Camera() : right_{0.f, 1.f, 0.f}, up_{0.f, 0.f, 1.f}, forward_{1.f, 0.f,
 
 Camera::~Camera() {}
 
-const Matrix4x4<float>& Camera::GetVeiwMatrix() const {
+const Matrix4x4<float>& Camera::GetViewMatrix() const {
     return view_matrix_;
+}
+
+const Matrix4x4<float>& Camera::GetInverseViewMatrix() const {
+    return inverse_view_matrix_;   
 }
 
 void Camera::UpdateVeiwMatrix() {
@@ -31,4 +35,24 @@ void Camera::UpdateVeiwMatrix() {
     view_matrix_[1][3] = position_.y;
     view_matrix_[2][3] = position_.z;
     view_matrix_[3][3] = 1.f;
+
+    inverse_view_matrix_[0][0] = right_.x;
+    inverse_view_matrix_[1][0] = up_.x;
+    inverse_view_matrix_[2][0] = forward_.x;
+    inverse_view_matrix_[3][0] = 0.f;
+
+    inverse_view_matrix_[0][1] = right_.y;
+    inverse_view_matrix_[1][1] = up_.y;
+    inverse_view_matrix_[2][1] = forward_.y;
+    inverse_view_matrix_[3][1] = 0.f;
+
+    inverse_view_matrix_[0][2] = right_.z;
+    inverse_view_matrix_[1][2] = up_.z;
+    inverse_view_matrix_[2][2] = forward_.z;
+    inverse_view_matrix_[3][2] = 0.f;
+
+    inverse_view_matrix_[0][3] = 0.f;
+    inverse_view_matrix_[1][3] = 0.f;
+    inverse_view_matrix_[2][3] = 0.f;
+    inverse_view_matrix_[3][3] = 1.f;
 }

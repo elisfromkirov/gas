@@ -9,6 +9,7 @@ target_include_directories(Gas3DGraphics
 
 target_sources(Gas3DGraphics
     PUBLIC
+        ${INCROOT}/Box.hpp
         ${INCROOT}/Camera.hpp
         ${INCROOT}/Color.hpp
         ${INCROOT}/IPrimitive.hpp
@@ -20,6 +21,7 @@ target_sources(Gas3DGraphics
         ${INCROOT}/Sphere.hpp
         ${INCROOT}/Triangle.hpp
     PRIVATE
+        Box.cpp
         Camera.cpp
         Color.cpp
         LightSource.cpp

@@ -15,11 +15,12 @@ void RayTracer::Trace(Scene* scene) {
 
 void RayTracer::TransformScene(Scene* scene) {
     for (auto primitive : scene->primitives_) {
-        primitive->TransformToCameraSpace(scene->camera_->GetVeiwMatrix());
+        primitive->TransformToCameraSpace(scene->camera_->GetViewMatrix(), 
+                                          scene->camera_->GetInverseViewMatrix());
     }
 
     for (auto light_source : scene->light_sources_) {
-        light_source->TransformToCameraSpace(scene->camera_->GetVeiwMatrix());
+        light_source->TransformToCameraSpace(scene->camera_->GetViewMatrix());
     }
 }
 
@@ -57,9 +58,9 @@ Color RayTracer::TraceRay(const Scene* scene, const Ray& ray) {
 
     if (nearest_primitive == nullptr) {
         return Color{0.0, 0.0, 0.0};
-    }/* else {
-         return Color{1.0, 1.0, 1.0};
-    }*/
+    } /* else {
+        return Color{1.0, 1.0, 1.0};
+    } */
     
     Vector3<float> intersection_point{ray.origin + ray.direction * min_t};
     return ComputeColor(scene, ray, nearest_primitive, intersection_point);

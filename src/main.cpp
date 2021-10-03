@@ -1,7 +1,7 @@
-#include "IPrimitive.hpp"
+#include "Box.hpp"
+#include "Camera.hpp"
 #include "Sphere.hpp"
 #include "Scene.hpp"
-#include "Triangle.hpp"
 #include "RayTracer.hpp"
 
 #include "Molecule.hpp"
@@ -18,12 +18,16 @@ int main() {
     Camera camera{};
     scene.RegisterCamera(&camera);
 
-    LightSource dynamic_light{Vector3<float>{2.0, -3.0, 0.0}, Color{1.0, 1.0, 1.0}};
-    scene.RegisterLightSource(&dynamic_light);
+    LightSource light{Vector3<float>{2.0, -3.0, 0.0}, Color{1.0, 1.0, 1.0}};
+    scene.RegisterLightSource(&light);
 
     Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 500};
-    Sphere sphere(Vector3<float>{ 0.0, 0.0, 0.0}, 0.7, &material);
-    scene.RegisterPrimitive(&sphere);
+
+    // Sphere sphere(Vector3<float>{ 0.0, 0.0, 0.0}, 0.7, &material);
+    // scene.RegisterPrimitive(&sphere);
+
+    Box box{Vector3<float>{-0.5, 0.0, +1}, Vector3<float>{0.5, 0.5, 0.5}, &material};
+    scene.RegisterPrimitive(&box);
 
     bool running = true;
     Vector3<float> position{2.0, -2.0, 0.0};
