@@ -23,8 +23,7 @@ public:
 
     virtual const Material* GetMaterial() const override;
 
-    virtual void TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix,
-                                        const Matrix4x4<float>& inverse_veiw_matrix) override;
+    virtual void TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) override;
 
 private:
     bool BoxSideRayIntersect(uint32_t index, const Ray& ray, float* t) const;

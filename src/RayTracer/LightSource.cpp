@@ -6,7 +6,7 @@ LightSource::LightSource(const Vector3<float>& postion, const Color& color)
 LightSource::~LightSource() {}
 
 void LightSource::TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) {
-    position_.camera_space = veiw_matrix * position_.world_space;
+    position_.camera_space = TransformPoint(veiw_matrix, position_.world_space);
 }
 
 const Vector3<float>& LightSource::GetPosition() const {

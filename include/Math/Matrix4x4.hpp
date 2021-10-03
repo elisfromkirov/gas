@@ -46,7 +46,9 @@ Matrix4x4<T> operator*(const Matrix4x4<T>& lhs, const Matrix4x4<T>& rhs);
 template <typename T>
 Matrix4x4<T> operator*(const Matrix4x4<T>& lhs, T rhs);
 
-Vector3<float> operator*(const Matrix4x4<float>& lhs, const Vector3<float>& rhs);
+Vector3<float> TransformPoint(const Matrix4x4<float>& lhs, const Vector3<float>& rhs);
+
+Vector3<float> TransformVector(const Matrix4x4<float>& lhs, const Vector3<float>& rhs);
 
 // -------------------------------------------------------------------------- //
 

@@ -15,8 +15,7 @@ void RayTracer::Trace(Scene* scene) {
 
 void RayTracer::TransformScene(Scene* scene) {
     for (auto primitive : scene->primitives_) {
-        primitive->TransformToCameraSpace(scene->camera_->GetViewMatrix(), 
-                                          scene->camera_->GetInverseViewMatrix());
+        primitive->TransformToCameraSpace(scene->camera_->GetViewMatrix());
     }
 
     for (auto light_source : scene->light_sources_) {

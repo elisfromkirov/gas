@@ -10,7 +10,6 @@ public:
     ~Camera();
 
     const Matrix4x4<float>& GetViewMatrix() const;
-    const Matrix4x4<float>& GetInverseViewMatrix() const;
 
 private:
     void UpdateVeiwMatrix();
@@ -22,7 +21,6 @@ private:
     Vector3<float> position_;
 
     Matrix4x4<float> view_matrix_;
-    Matrix4x4<float> inverse_view_matrix_;
 };
 
 #endif // __CAMERA_HPP__

@@ -66,11 +66,12 @@ const Material* Box::GetMaterial() const {
     return material_;
 }
 
-void Box::TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix,
-                                 const Matrix4x4<float>& inverse_veiw_matrix) {
+void Box::TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) {
     for (uint32_t i = 0; i < kSurfaceCount; ++i) {
-        surfaces_[i].camera_space.normal = inverse_veiw_matrix * surfaces_[i].world_space.normal;
-        surfaces_[i].camera_space.point  =         veiw_matrix * surfaces_[i].world_space.point;
+        surfaces_[i].camera_space.normal = TransformVector(veiw_matrix,
+                                                           surfaces_[i].world_space.normal);
+        surfaces_[i].camera_space.point  = TransformPoint(veiw_matrix,
+                                                          surfaces_[i].world_space.point);
     }
 }
 

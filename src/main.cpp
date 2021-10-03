@@ -23,8 +23,8 @@ int main() {
 
     Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 200};
 
-    // Sphere sphere(Vector3<float>{0.0, 0.0, 0.0}, 0.7, &material);
-    // scene.RegisterPrimitive(&sphere);
+    Sphere sphere(Vector3<float>{0.2, 0.2, -0.2}, 0.4, &material);
+    scene.RegisterPrimitive(&sphere);
 
     Box box{Vector3<float>{0.0, -0.5, 0.4}, Vector3<float>{0.5, 0.5, 0.5}, &material};
     scene.RegisterPrimitive(&box);

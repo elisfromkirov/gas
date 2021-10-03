@@ -41,7 +41,6 @@ const Material* Sphere::GetMaterial() const {
     return material_;
 }
 
-void Sphere::TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix,
-                                    const Matrix4x4<float>& inverse_veiw_matrix) {
-    center_.camera_space = veiw_matrix * center_.world_space;
+void Sphere::TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) {
+    center_.camera_space = TransformPoint(veiw_matrix, center_.world_space);
 }

@@ -16,8 +16,7 @@ public:
 
     virtual const Material* GetMaterial() const = 0;
 
-    virtual void TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix, 
-                                        const Matrix4x4<float>& inverse_veiw_matrix) = 0;
+    virtual void TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) = 0;
 };
 
 #endif // __I_PRIMITVES_HPP__
