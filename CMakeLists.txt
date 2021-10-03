@@ -20,6 +20,7 @@ target_link_libraries(Gas
     PUBLIC
         GasComponents
         GasGas
+        GasPhysics
         Gas3DGraphics
         GasMath
         GasPlatform
@@ -27,7 +28,8 @@ target_link_libraries(Gas
     )
 
 add_subdirectory(src/Components)
-add_subdirectory(src/Gas)    
+add_subdirectory(src/Gas)
+add_subdirectory(src/PhysicsEngine)
 add_subdirectory(src/RayTracer)
 add_subdirectory(src/Math)
 add_subdirectory(src/Platform)

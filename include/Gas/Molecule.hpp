@@ -2,13 +2,11 @@
 #define __MOLECULE_HPP__
 
 #include "GraphicsComponent.hpp"
+#include "IGraphicsEntity.hpp"
+#include "IPhysicsEntity.hpp"
+#include "PhysicsComponent.hpp"
 
-class IMolecule {
-public:
-    virtual ~IMolecule() {}
-
-    virtual IGraphicsComponent* GetGraphicsComponent() = 0;
-};
+class IMolecule : public IGraphicsEntity, public IPhysicsEntity {};
 
 class SphereMolecule : public IMolecule {
 public:
@@ -17,8 +15,15 @@ public:
 
     virtual IGraphicsComponent* GetGraphicsComponent() override;
 
+    virtual IPhysicsComponent* GetPhysicsComponent() override;
+
+    virtual void Move(const Vector3<float>& displacement) override;
+
+    virtual void CollisionResponse(IPhysicsEntity* entity) override;
+
 private:
     SphereGraphicsComponent graphics_component_;
+    SpherePhysicsComponent physics_component_;
 };
 
 #endif // __MOLECULE_HPP__

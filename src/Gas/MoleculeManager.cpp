@@ -1,7 +1,7 @@
 #include "MoleculeManager.hpp"
 
-MoleculeManager::MoleculeManager(RayTracer* ray_tracer, Scene* scene)
-    : ray_tracer_{ray_tracer}, scene_{scene} {}
+MoleculeManager::MoleculeManager(RayTracer* ray_tracer, Scene* scene, PhysicsEngine* physics_engine)
+    : ray_tracer_{ray_tracer}, scene_{scene}, physics_engine_{physics_engine} {}
 
 MoleculeManager::~MoleculeManager() {
     for (auto molecule : molecules_) {
@@ -18,4 +18,8 @@ void MoleculeManager::AddMolecule(IMolecule* molecule) {
 
 void MoleculeManager::DrawMolecules() {
     ray_tracer_->Trace(scene_);
+}
+
+void MoleculeManager::MoveMolecules() {
+    physics_engine_->SimulatePhysics();
 }

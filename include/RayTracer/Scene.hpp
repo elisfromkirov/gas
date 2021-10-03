@@ -2,6 +2,7 @@
 #define __SCENE_HPP__
 
 #include <list>
+#include <cassert>
 
 #include "Camera.hpp"
 #include "IPrimitive.hpp"

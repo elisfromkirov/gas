@@ -10,7 +10,7 @@
 
 class IGraphicsComponent {
 public:
-    virtual ~IGraphicsComponent() = default;
+    virtual ~IGraphicsComponent() {}
 
     virtual void RegisterOnScene(Scene* scene) = 0;
 };
@@ -18,7 +18,7 @@ public:
 class SphereGraphicsComponent : public IGraphicsComponent {
 public:
     SphereGraphicsComponent(const Vector3<float>& center, float radius, const Material* material);
-    virtual ~SphereGraphicsComponent() override = default;
+    virtual ~SphereGraphicsComponent() override {}
 
     virtual void RegisterOnScene(Scene* scene) override;
 

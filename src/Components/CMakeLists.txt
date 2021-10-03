@@ -10,14 +10,19 @@ target_include_directories(GasComponents
 target_sources(GasComponents
     PUBLIC
         ${INCROOT}/GraphicsComponent.hpp
+        ${INCROOT}/IGraphicsEntity.hpp
+        ${INCROOT}/IPhysicsEntity.hpp
+        ${INCROOT}/PhysicsComponent.hpp
     PRIVATE
         GraphicsComponent.cpp
+        PhysicsComponent.cpp
     )
 
 target_link_libraries(GasComponents
     PUBLIC
         GasMath
         Gas3DGraphics
+        GasPhysics
     PRIVATE
         m
     )
