@@ -19,6 +19,7 @@ target_sources(Gas3DGraphics
         ${INCROOT}/RayTracer.hpp
         ${INCROOT}/Scene.hpp
         ${INCROOT}/Sphere.hpp
+        ${INCROOT}/Surface.hpp
         ${INCROOT}/Triangle.hpp
     PRIVATE
         Box.cpp
@@ -28,6 +29,7 @@ target_sources(Gas3DGraphics
         RayTracer.cpp
         Scene.cpp
         Sphere.cpp
+        Surface.cpp
         Triangle.cpp
     )
 

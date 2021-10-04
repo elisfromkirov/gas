@@ -2,11 +2,11 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "Matrix4x4.hpp"
-
 static bool IsEqual(float lhs, float rhs) {
     return fabs(lhs - rhs) < FLT_EPSILON;
 }
+
+#include "Matrix4x4.hpp"
 
 Vector3<float> TransformPoint(const Matrix4x4<float>& lhs, const Vector3<float>& rhs) {
     float w = lhs[3][0] * rhs.x + lhs[3][1] * rhs.y + lhs[3][2] * rhs.z + lhs[3][3];
