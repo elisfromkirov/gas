@@ -7,6 +7,7 @@ MoleculeManager::~MoleculeManager() {
     for (auto molecule : molecules_) {
         delete molecule;
     }
+    delete vessel_;
 }
 
 void MoleculeManager::AddMolecule(IMolecule* molecule) {
@@ -14,6 +15,13 @@ void MoleculeManager::AddMolecule(IMolecule* molecule) {
 
     molecules_.push_back(molecule);
     molecule->GetGraphicsComponent()->RegisterOnScene(scene_);
+}
+
+void MoleculeManager::AddVessel(Vessel* vessel) {
+    assert(vessel != nullptr);
+
+    vessel_ = vessel;
+    vessel_->GetGraphicsComponent()->RegisterOnScene(scene_);
 }
 
 void MoleculeManager::DrawMolecules() {

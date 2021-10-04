@@ -4,6 +4,8 @@ SphereMolecule::SphereMolecule(const Vector3<float>& center, float radius, const
     : graphics_component_{center, radius, material},
       physics_component_{this, Vector3<float>{0.f, 0.f, 0.f}, 0.f, center, radius} {}
 
+SphereMolecule::~SphereMolecule() {}
+
 IGraphicsComponent* SphereMolecule::GetGraphicsComponent() {
     return &graphics_component_;
 }

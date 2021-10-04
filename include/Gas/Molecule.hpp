@@ -11,7 +11,7 @@ class IMolecule : public IGraphicsEntity, public IPhysicsEntity {};
 class SphereMolecule : public IMolecule {
 public:
     SphereMolecule(const Vector3<float>& center, float radius, const Material* material);
-    virtual ~SphereMolecule() override = default;
+    virtual ~SphereMolecule() override;
 
     virtual IGraphicsComponent* GetGraphicsComponent() override;
 

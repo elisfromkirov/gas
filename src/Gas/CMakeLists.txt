@@ -11,9 +11,11 @@ target_sources(GasGas
     PUBLIC
         ${INCROOT}/Molecule.hpp
         ${INCROOT}/MoleculeManager.hpp
+        ${INCROOT}/Vessel.hpp
     PRIVATE
         Molecule.cpp
         MoleculeManager.cpp
+        Vessel.cpp
     )
 
 target_link_libraries(GasGas

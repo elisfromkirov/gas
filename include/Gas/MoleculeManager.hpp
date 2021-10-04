@@ -7,6 +7,7 @@
 #include "RayTracer.hpp"
 #include "Scene.hpp"
 #include "PhysicsEngine.hpp"
+#include "Vessel.hpp"
 
 class MoleculeManager {
 public:
@@ -14,6 +15,7 @@ public:
     ~MoleculeManager();
 
     void AddMolecule(IMolecule* molecule);
+    void AddVessel(Vessel* vessel);
 
     void DrawMolecules();
     
@@ -21,6 +23,7 @@ public:
 
 private:
     std::list<IMolecule*> molecules_;
+    Vessel* vessel_;
 
     RayTracer*            ray_tracer_;
     Scene*                scene_;
