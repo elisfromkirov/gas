@@ -1,9 +1,10 @@
 #ifndef __PHYSICS_ENGINE_HPP__
 #define __PHYSICS_ENGINE_HPP__
 
-#include <list>
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
+#include <vector>
 
 #include "RigidBody.hpp"
 
@@ -14,8 +15,7 @@ public:
     void SimulatePhysics(float delta_time);
 
 private:
-    std::list<RigidBody*> rigid_bodies_;
-    
+    std::vector<RigidBody*> rigid_bodies_;
 };
 
 #endif // __PHYSICS_ENGINE_HPP__

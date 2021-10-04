@@ -16,7 +16,7 @@
 const uint32_t kWindowWidth{800};
 const uint32_t kWindowHeight{600};
 
-const Material material{Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 200}; 
+const Material material{Color{0.2, 0.0, 0.0}, Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 100}; 
 
 void SetFPS(Window& window, clock_t begin, clock_t end);
 
@@ -29,16 +29,19 @@ int main() {
     Camera camera{};
     scene.RegisterCamera(&camera);
 
-    Vector3<float> light_position{0.8, 0.3, -0.8};
-    LightSource light{light_position, Color{1.0, 1.0, 1.0}};
-    scene.RegisterLightSource(&light);
+    LightSource light_sources[2] = {
+        LightSource(Vector3<float>{1.0,  0.5, -0.5}, Color{1.0, 1.0, 1.0}),
+        LightSource(Vector3<float>{1.0, -0.5, +0.5}, Color{1.0, 1.0, 1.0})
+    };
+    scene.RegisterLightSource(&light_sources[0]);
+    scene.RegisterLightSource(&light_sources[1]);
 
     PhysicsEngine physics_engine{};
 
     MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
     
     manager.AddMolecule(new SphereMolecule(
-        Vector3<float>{0.5, 0.0, 0.0}, 0.2, Vector3<float>{-0.5, 0.2, 0.0}, &material));
+        Vector3<float>{0.5, 0.0, 0.0}, 0.3, Vector3<float>{-0.6, 0.4, 0.3}, &material));
     manager.AddVessel(new Vessel());
 
     bool running = true;

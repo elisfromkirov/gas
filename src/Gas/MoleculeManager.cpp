@@ -23,6 +23,7 @@ void MoleculeManager::AddVessel(Vessel* vessel) {
 
     vessel_ = vessel;
     vessel_->GetGraphicsComponent()->RegisterOnScene(scene_);
+    vessel->GetPhysicsComponent()->RegisterOnPhysicsEngine(physics_engine_);
 }
 
 void MoleculeManager::DrawMolecules() {

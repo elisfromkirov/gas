@@ -9,9 +9,11 @@ target_include_directories(GasPhysics
 
 target_sources(GasPhysics
     PUBLIC
+        ${INCROOT}/Collision.hpp
         ${INCROOT}/PhysicsEngine.hpp
         ${INCROOT}/RigidBody.hpp
     PRIVATE
+        Collision.cpp
         PhysicsEngine.cpp
         RigidBody.cpp
     )

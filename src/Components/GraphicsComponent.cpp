@@ -16,8 +16,15 @@ void SphereGraphicsComponent::Move(const Vector3<float>& displacement) {
     sphere_.SetCenter(sphere_.GetCenter() + displacement);
 }
 
-Material VesselGraphicsComponent::far_material {Color{0.1, 0.1, 0.1}, Color{0.1, 0.1, 0.1}, 200};
-Material VesselGraphicsComponent::wall_material{Color{0.2, 0.2, 0.2}, Color{0.2, 0.2, 0.2}, 200};
+Material VesselGraphicsComponent::far_material {Color{0.0, 0.0, 0.0}, 
+                                                Color{0.1, 0.1, 0.1},
+                                                Color{0.1, 0.1, 0.1},
+                                                200};
+
+Material VesselGraphicsComponent::wall_material{Color{0.0, 0.0, 0.0},
+                                                Color{0.2, 0.2, 0.2},
+                                                Color{0.2, 0.2, 0.2},
+                                                200};
 
 VesselGraphicsComponent::VesselGraphicsComponent()
     : far_   {Vector3<float>{1.f,  0.f,  0.f}, Vector3<float>{-1.f,  0.f,  0.f}, &far_material},

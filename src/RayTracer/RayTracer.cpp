@@ -74,7 +74,7 @@ Color RayTracer::ComputeColor(const Scene* scene, const Ray& ray, const IPrimiti
     Vector3<float> direction{Normalize(ray.direction * (-1.f))};
     Vector3<float> normal   {primitive->GetNormal(point)};
 
-    Color result{0.0, 0.0, 0.0};
+    Color result{material->ambient_color};
 
     for (auto light_source : scene->light_sources_) {
         Vector3<float> direction_to_light{Normalize(light_source->GetPosition() - point)};

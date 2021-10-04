@@ -8,26 +8,41 @@
 
 enum PhysicsComponentType : uint32_t {
     kSphereBodyType = 0,
-    kWallBodyType   = 1,
-    kBoxBodyType    = 2
+    kBoxBodyType    = 1,
+    kWallBodyType   = 2
 };
 
 struct RigidBody {
-    RigidBody(uint32_t type, IPhysicsEntity* entity);
+    RigidBody(uint32_t type, IPhysicsEntity* entity, const Vector3<float>& velocity, float mass);
+
+    virtual void Move(const Vector3<float>& displacement);
 
     uint32_t type;
     IPhysicsEntity* entity;
+
+    Vector3<float> velocity;
+    float mass;
 };
 
 struct SphereBody : public RigidBody {
     SphereBody(IPhysicsEntity* entity, const Vector3<float>& center, float radius,
                const Vector3<float>& velocity, float mass);
-    
+
+    virtual void Move(const Vector3<float>& displacement) override;
+
     Vector3<float> center;
     float          radius;
 
-    Vector3<float> velocity;
-    float mass;
+};
+
+struct BoxBody : public RigidBody {
+    BoxBody(IPhysicsEntity* entity, const Vector3<float>& center, const Vector3<float>& size,
+            const Vector3<float>& velocity, float mass);
+
+    virtual void Move(const Vector3<float>& displacement) override;
+
+    Vector3<float> center;
+    Vector3<float> size;
 };
 
 struct WallBody : public RigidBody {
@@ -35,17 +50,6 @@ struct WallBody : public RigidBody {
 
     Vector3<float> normal;
     Vector3<float> point;
-};
-
-struct BoxBody : public RigidBody {
-    BoxBody(IPhysicsEntity* entity, const Vector3<float>& center, const Vector3<float>& size,
-            const Vector3<float>& velocity, float mass);
-
-    Vector3<float> center;
-    Vector3<float> size;
-    
-    Vector3<float> velocity;
-    float mass;
 };
 
 #endif // __RIGIT_BODY_HPP__

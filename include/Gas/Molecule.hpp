@@ -6,7 +6,7 @@
 #include "IPhysicsEntity.hpp"
 #include "PhysicsComponent.hpp"
 
-class IMolecule : public IGraphicsEntity, public IPhysicsEntity {};
+class IMolecule : public IPhysicsEntity, public IGraphicsEntity {};
 
 class SphereMolecule : public IMolecule {
 public:

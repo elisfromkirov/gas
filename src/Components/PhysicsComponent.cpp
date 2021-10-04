@@ -3,7 +3,7 @@
 SpherePhysicsComponent::SpherePhysicsComponent(
     IPhysicsEntity* entity, const Vector3<float>& center, float radius,
     const Vector3<float>& velocity, float mass) 
-    : sphere_{entity, center, radius, velocity, mass} {} 
+    : sphere_{entity, center, radius, velocity, mass} {}
 
 SpherePhysicsComponent::~SpherePhysicsComponent() {}
 

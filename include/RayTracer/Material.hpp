@@ -4,6 +4,8 @@
 #include "Color.hpp"
 
 struct Material {
+    Color ambient_color;
+
     Color diffuse_color;
     
     Color specular_color;
