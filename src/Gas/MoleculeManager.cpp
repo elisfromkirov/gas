@@ -15,6 +15,7 @@ void MoleculeManager::AddMolecule(IMolecule* molecule) {
 
     molecules_.push_back(molecule);
     molecule->GetGraphicsComponent()->RegisterOnScene(scene_);
+    molecule->GetPhysicsComponent()->RegisterOnPhysicsEngine(physics_engine_);
 }
 
 void MoleculeManager::AddVessel(Vessel* vessel) {
@@ -28,6 +29,6 @@ void MoleculeManager::DrawMolecules() {
     ray_tracer_->Trace(scene_);
 }
 
-void MoleculeManager::MoveMolecules() {
-    physics_engine_->SimulatePhysics();
+void MoleculeManager::MoveMolecules(float delta_time) {
+    physics_engine_->SimulatePhysics(delta_time);
 }

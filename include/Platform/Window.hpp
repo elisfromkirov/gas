@@ -17,6 +17,9 @@ public:
 
     void UpdateWindowSurface();
 
+    const char* GetTitle() const;
+    void SetTitle(const char* title);
+
 private:
     SDL_Window*   window_;
 

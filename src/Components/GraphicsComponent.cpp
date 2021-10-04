@@ -12,6 +12,10 @@ void SphereGraphicsComponent::RegisterOnScene(Scene* scene) {
     scene->RegisterPrimitive(&sphere_);
 }
 
+void SphereGraphicsComponent::Move(const Vector3<float>& displacement) {
+    sphere_.SetCenter(sphere_.GetCenter() + displacement);
+}
+
 Material VesselGraphicsComponent::far_material {Color{0.1, 0.1, 0.1}, Color{0.1, 0.1, 0.1}, 200};
 Material VesselGraphicsComponent::wall_material{Color{0.2, 0.2, 0.2}, Color{0.2, 0.2, 0.2}, 200};
 

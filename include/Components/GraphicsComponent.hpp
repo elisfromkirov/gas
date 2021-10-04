@@ -23,6 +23,8 @@ public:
 
     virtual void RegisterOnScene(Scene* scene) override;
 
+    void Move(const Vector3<float>& displacement);
+
 private:
     Sphere sphere_;
 };

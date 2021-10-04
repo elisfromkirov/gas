@@ -19,7 +19,7 @@ public:
 
     void DrawMolecules();
     
-    void MoveMolecules();
+    void MoveMolecules(float delta_time);
 
 private:
     std::list<IMolecule*> molecules_;

@@ -20,12 +20,29 @@ public:
     SpherePhysicsComponent(IPhysicsEntity* entity, const Vector3<float>& center, float radius,
                            const Vector3<float>& velocity, float mass);
 
-    virtual ~SpherePhysicsComponent() override {}
+    virtual ~SpherePhysicsComponent() override;
 
     virtual void RegisterOnPhysicsEngine(PhysicsEngine* physics_engine) override;
 
 private:
     SphereBody sphere_;
+};
+
+class VesselPhysicsComponent : public IPhysicsComponent {
+public:
+    VesselPhysicsComponent(IPhysicsEntity* entity);
+
+    virtual ~VesselPhysicsComponent() override;
+
+    virtual void RegisterOnPhysicsEngine(PhysicsEngine* physics_engine) override;
+
+private:
+    WallBody near_;
+    WallBody far_;
+    WallBody left_;
+    WallBody right_;
+    WallBody top_;
+    WallBody bottom_;
 };
 
 #endif // __PHYSICS_COMPONENT_HPP__

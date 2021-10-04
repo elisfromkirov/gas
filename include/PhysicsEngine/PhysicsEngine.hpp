@@ -11,10 +11,11 @@ class PhysicsEngine {
 public:
     void RegisterRigidBody(RigidBody* rigid_body);
     
-    void SimulatePhysics();
+    void SimulatePhysics(float delta_time);
 
 private:
     std::list<RigidBody*> rigid_bodies_;
+    
 };
 
 #endif // __PHYSICS_ENGINE_HPP__

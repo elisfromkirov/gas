@@ -30,3 +30,12 @@ void Window::UpdateWindowSurface() {
 
     SDL_UpdateWindowSurface(window_);
 }
+
+const char* Window::GetTitle() const {
+    return title_;
+}
+
+void Window::SetTitle(const char* title) {
+    title_ = title;
+    SDL_SetWindowTitle(window_, title_);
+}

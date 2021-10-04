@@ -44,3 +44,11 @@ const Material* Sphere::GetMaterial() const {
 void Sphere::TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) {
     center_.camera_space = TransformPoint(veiw_matrix, center_.world_space);
 }
+
+const Vector3<float>& Sphere::GetCenter() const {
+    return center_.world_space;
+}
+
+void Sphere::SetCenter(const Vector3<float>& center) {
+    center_.world_space = center;
+}

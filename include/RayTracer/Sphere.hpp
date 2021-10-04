@@ -22,6 +22,9 @@ public:
 
     virtual void TransformToCameraSpace(const Matrix4x4<float>& veiw_matrix) override;
 
+    const Vector3<float>& GetCenter() const;
+    void SetCenter(const Vector3<float>& center);
+
 private:
     SpaceDependentData<Vector3<float>> center_;
     SpaceDependentData<float>          radius_;
