@@ -12,6 +12,36 @@ bool CollisionDetectSphereSphere(RigidBody* lhs, RigidBody* rhs, float delta_tim
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 
+    SphereBody* first_sphere  = reinterpret_cast<SphereBody*>(lhs);
+    SphereBody* second_sphere = reinterpret_cast<SphereBody*>(rhs);
+
+    Vector3<float> center_difference  {first_sphere->center   - second_sphere->center  };
+    Vector3<float> velocity_difference{first_sphere->velocity - second_sphere->velocity};
+    
+    float distanse = first_sphere->radius + second_sphere->radius;
+
+    float a = DotProduct(velocity_difference, velocity_difference);
+    float b = DotProduct(velocity_difference, center_difference  );
+    float c = DotProduct(center_difference,   center_difference  ) - distanse * distanse;
+    float d = b * b - a * c;
+
+    if (d < 0.0f) {
+        return false;
+    }
+
+    float roots[] = {std::min((-b - sqrt(d))/a, (-b + sqrt(d))/a),
+                     std::max((-b - sqrt(d))/a, (-b + sqrt(d))/a)};
+
+    if (0.f < roots[0] && roots[0] < delta_time) {
+        *time = roots[0];
+        return true;
+    }
+
+    if (0.f < roots[1] && roots[1] < delta_time) {
+        *time = roots[1];
+        return true;
+    }
+
     return false;
 }
 
@@ -19,12 +49,16 @@ bool CollisionDetectSphereBox(RigidBody* lhs, RigidBody* rhs, float delta_time, 
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 
+    // TODO: Write code!
+
     return false;
 }
 
 bool CollisionDetectBoxBox(RigidBody* lhs, RigidBody* rhs, float delta_time, float* time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
+
+    // TODO: Write code!
 
     return false;
 }
@@ -55,6 +89,8 @@ bool CollisionDetectBoxWall(RigidBody* lhs, RigidBody* rhs, float delta_time, fl
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 
+    // TODO: Write code!
+
     return false;
 }
 
@@ -65,22 +101,44 @@ bool CollisionDetectWallWall(RigidBody* lhs, RigidBody* rhs, float delta_time, f
     return false;
 }
 
-void CollisionResponseSphereSphere(RigidBody* lhs, RigidBody* rhs) {
+void CollisionResponseSphereSphere(RigidBody* lhs, RigidBody* rhs, float collision_time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
+
+    SphereBody* first_sphere  = reinterpret_cast<SphereBody*>(lhs);
+    SphereBody* second_sphere = reinterpret_cast<SphereBody*>(rhs);
+
+    Vector3<float> normal{Normalize(
+        (first_sphere->center   - second_sphere->center  ) +
+        (first_sphere->velocity - second_sphere->velocity) * collision_time)};
+
+    Vector3<float> first_velocity {normal * DotProduct(first_sphere->velocity,  normal)};
+    Vector3<float> second_velocity{normal * DotProduct(second_sphere->velocity, normal)};
+
+    first_sphere->velocity += 
+        (second_velocity - first_velocity) * 
+        (2.f * second_sphere->mass / (second_sphere->mass + second_sphere->mass));
+
+    second_sphere->velocity += 
+        (first_velocity - second_velocity) * 
+        (2.f * first_sphere->mass / (second_sphere->mass + second_sphere->mass));
 }
 
-void CollisionResponseSphereBox(RigidBody* lhs, RigidBody* rhs) {
+void CollisionResponseSphereBox(RigidBody* lhs, RigidBody* rhs, float collision_time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
+
+    // TODO: Write code!
 }
 
-void CollisionResponseBoxBox(RigidBody* lhs, RigidBody* rhs) {
+void CollisionResponseBoxBox(RigidBody* lhs, RigidBody* rhs, float collision_time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
+
+    // TODO: Write code!
 }
 
-void CollisionResponseSphereWall(RigidBody* lhs, RigidBody* rhs) {
+void CollisionResponseSphereWall(RigidBody* lhs, RigidBody* rhs, float collision_time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 
@@ -90,12 +148,14 @@ void CollisionResponseSphereWall(RigidBody* lhs, RigidBody* rhs) {
     sphere->velocity -= wall->normal * (2.f * DotProduct(wall->normal, sphere->velocity));
 }
 
-void CollisionResponseBoxWall(RigidBody* lhs, RigidBody* rhs) {
+void CollisionResponseBoxWall(RigidBody* lhs, RigidBody* rhs, float collision_time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
+    
+    // TODO: Write code!
 }
 
-void CollisionResponseWallWall(RigidBody* lhs, RigidBody* rhs) {
+void CollisionResponseWallWall(RigidBody* lhs, RigidBody* rhs, float collision_time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 }

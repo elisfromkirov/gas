@@ -1,6 +1,7 @@
 #ifndef __COLLISION_HPP__
 #define __COLLISION_HPP__
 
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
 
@@ -41,14 +42,14 @@ static CollisionDetectFunction kCollisionDetectTable[6] = {
     CollisionDetectWallWall
 };
 
-void CollisionResponseSphereSphere(RigidBody* lhs, RigidBody* rhs);
-void CollisionResponseSphereBox   (RigidBody* lhs, RigidBody* rhs);
-void CollisionResponseBoxBox      (RigidBody* lhs, RigidBody* rhs);
-void CollisionResponseSphereWall  (RigidBody* lhs, RigidBody* rhs);
-void CollisionResponseBoxWall     (RigidBody* lhs, RigidBody* rhs);
-void CollisionResponseWallWall    (RigidBody* lhs, RigidBody* rhs);
+void CollisionResponseSphereSphere(RigidBody* lhs, RigidBody* rhs, float collision_time);
+void CollisionResponseSphereBox   (RigidBody* lhs, RigidBody* rhs, float collision_time);
+void CollisionResponseBoxBox      (RigidBody* lhs, RigidBody* rhs, float collision_time);
+void CollisionResponseSphereWall  (RigidBody* lhs, RigidBody* rhs, float collision_time);
+void CollisionResponseBoxWall     (RigidBody* lhs, RigidBody* rhs, float collision_time);
+void CollisionResponseWallWall    (RigidBody* lhs, RigidBody* rhs, float collision_time);
 
-typedef void (*CollisionResponseFunction)(RigidBody*, RigidBody*);
+typedef void (*CollisionResponseFunction)(RigidBody*, RigidBody*, float);
 
 static CollisionResponseFunction kCollisionResponseTable[6] = {
     CollisionResponseSphereSphere,

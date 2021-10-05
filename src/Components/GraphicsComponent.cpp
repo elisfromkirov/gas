@@ -28,10 +28,10 @@ Material VesselGraphicsComponent::wall_material{Color{0.0, 0.0, 0.0},
 
 VesselGraphicsComponent::VesselGraphicsComponent()
     : far_   {Vector3<float>{1.f,  0.f,  0.f}, Vector3<float>{-1.f,  0.f,  0.f}, &far_material},
-      left_  {Vector3<float>{0.f,  1.f,  0.f}, Vector3<float>{ 0.f, -1.f,  0.f}, &wall_material},
-      right_ {Vector3<float>{0.f, -1.f,  0.f}, Vector3<float>{ 0.f,  1.f,  0.f}, &wall_material},
-      top_   {Vector3<float>{0.f,  0.f, -1.f}, Vector3<float>{ 0.f,  0.f,  1.f}, &wall_material},
-      bottom_{Vector3<float>{0.f,  0.f,  1.f}, Vector3<float>{ 0.f,  0.f, -1.f}, &wall_material} {}
+      left_  {Vector3<float>{0.f,  1.f,  0.f}, Vector3<float>{ 0.f, -1.0f,  0.f}, &wall_material},
+      right_ {Vector3<float>{0.f, -1.f,  0.f}, Vector3<float>{ 0.f,  1.0f,  0.f}, &wall_material},
+      top_   {Vector3<float>{0.f,  0.f, -1.f}, Vector3<float>{ 0.f,  0.f,  1.0f}, &wall_material},
+      bottom_{Vector3<float>{0.f,  0.f,  1.f}, Vector3<float>{ 0.f,  0.f, -1.0f}, &wall_material} {}
 
 VesselGraphicsComponent::~VesselGraphicsComponent() {}
 

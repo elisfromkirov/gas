@@ -26,11 +26,13 @@ void PhysicsEngine::SimulatePhysics(float delta_time) {
                 continue;
             }
 
-            if (kCollisionDetectTable[index](lhs, rhs, delta_time, &collisions.at(i).collision_time)) {            
-                collisions.at(i).lhs          = i;
-                collisions.at(i).rhs          = j;
-                collisions.at(i).is_detected  = true;
-                collisions.at(i).is_processed = false;
+            float collision_time = 0.f;
+            if (kCollisionDetectTable[index](lhs, rhs, delta_time, &collision_time)) {            
+                collisions.at(i).lhs            = i;
+                collisions.at(i).rhs            = j;
+                collisions.at(i).collision_time = collision_time;
+                collisions.at(i).is_detected    = true;
+                collisions.at(i).is_processed   = false;
 
                 collisions.at(j) = collisions.at(i);
             }
@@ -53,13 +55,13 @@ void PhysicsEngine::SimulatePhysics(float delta_time) {
             }
 
             Vector3<float> lhs_displacement{lhs->velocity * collisions.at(i).collision_time};
-            Vector3<float> rhs_displacement{lhs->velocity * collisions.at(i).collision_time};
+            Vector3<float> rhs_displacement{rhs->velocity * collisions.at(i).collision_time};
 
             uint32_t index = kCollisionDetectIndexTable[lhs->type][rhs->type];
             if (index == kInvalidIndex) {
                 continue;
-            }  
-            kCollisionResponseTable[index](lhs, rhs);
+            }
+            kCollisionResponseTable[index](lhs, rhs, collisions.at(i).collision_time);
 
             lhs_displacement += lhs->velocity * (delta_time - collisions.at(i).collision_time);
             rhs_displacement += rhs->velocity * (delta_time - collisions.at(i).collision_time);

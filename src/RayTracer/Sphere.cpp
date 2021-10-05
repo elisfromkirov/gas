@@ -21,13 +21,12 @@ bool Sphere::RayIntersect(const Ray& ray, float* t) const {
         return false;
     }
 
-    float t1 = - b - sqrt(d)/a;
-    float t2 = - b + sqrt(d)/a;
+    float roots[] = {(-b - sqrt(d))/a, (-b + sqrt(d))/a};
 
-    if (0.f < t1 && t1 < 1.f) {
-        *t = t2; 
+    if (0.f < roots[0] && roots[0] < 1.f) {
+        *t = roots[1];
     } else {
-        *t = t1;
+        *t = roots[0];
     }
 
     return true;

@@ -16,7 +16,7 @@
 const uint32_t kWindowWidth{800};
 const uint32_t kWindowHeight{600};
 
-const Material material{Color{0.2, 0.0, 0.0}, Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 100}; 
+const Material material{Color{0.1, 0.0, 0.0}, Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 100}; 
 
 void SetFPS(Window& window, clock_t begin, clock_t end);
 
@@ -29,9 +29,9 @@ int main() {
     Camera camera{};
     scene.RegisterCamera(&camera);
 
-    LightSource light_sources[2] = {
-        LightSource(Vector3<float>{1.0,  0.5, -0.5}, Color{1.0, 1.0, 1.0}),
-        LightSource(Vector3<float>{1.0, -0.5, +0.5}, Color{1.0, 1.0, 1.0})
+    LightSource light_sources[] = {
+        LightSource(Vector3<float>{1.9,  0.9f, -0.9f}, Color{1.0, 1.0, 1.0}),
+        LightSource(Vector3<float>{1.9, -0.9f, -0.9f}, Color{1.0, 1.0, 1.0})
     };
     scene.RegisterLightSource(&light_sources[0]);
     scene.RegisterLightSource(&light_sources[1]);
@@ -39,9 +39,12 @@ int main() {
     PhysicsEngine physics_engine{};
 
     MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
-    
-    manager.AddMolecule(new SphereMolecule(
-        Vector3<float>{0.5, 0.0, 0.0}, 0.3, Vector3<float>{-0.6, 0.4, 0.3}, &material));
+
+    manager.AddMolecule(new SphereMolecule(Vector3<float>{0.5, 0.0, 0.0}, 0.1, Vector3<float>{0.4, -0.3, 0.4}, &material));
+    manager.AddMolecule(new SphereMolecule(Vector3<float>{0.0, 0.5, 0.0}, 0.1, Vector3<float>{0.4, 0.0, 0.3}, &material));
+    manager.AddMolecule(new SphereMolecule(Vector3<float>{-0.05, -0.7, -0.05}, 0.1, Vector3<float>{0.0,  0.3, 0.0}, &material));
+    manager.AddMolecule(new SphereMolecule(Vector3<float>{ 0.05,  0.7,  0.05}, 0.1, Vector3<float>{0.0, -0.3, 0.0}, &material));
+
     manager.AddVessel(new Vessel());
 
     bool running = true;

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 
 project(Gas)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -O1 -W -Wall -Wextra -Wno-unused-parameter -Wno-unused-private-field")
+set(CMAKE_CXX_FLAGS "-std=c++11 -O3 -DNDEBUG -W -Wall -Wextra -Wno-unused-parameter -Wno-unused-private-field")
 set(CMAKE_EXE_LINKER_FLAGS "-lm -lSDL2")
 
 add_executable(Gas)
