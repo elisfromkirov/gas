@@ -37,9 +37,15 @@ int main() {
     PhysicsEngine physics_engine{};
 
     MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
-    manager.AddMolecule(new BoxMolecule(Vector3<float>{0.5, 0.3, 0.2}, 
-                                        Vector3<float>{0.2, 0.2, 0.2}, 
-                                        Vector3<float>{-0.1, 0.2, 0.4}));
+    manager.AddMolecule(new BoxMolecule(Vector3<float>{ 0.0,  0.8, 0.05 }, 
+                                        Vector3<float>{ 0.1,  0.1, 0.2  }, 
+                                        Vector3<float>{ 0.1, -0.2, 0.0  }));
+    manager.AddMolecule(new BoxMolecule(Vector3<float>{ 0.0, -0.8, -0.05}, 
+                                        Vector3<float>{ 0.1,  0.2, 0.2  }, 
+                                        Vector3<float>{ 0.1,  0.2, 0.0  }));
+    manager.AddMolecule(new BoxMolecule(Vector3<float>{-0.5,  0.0, 0.0 }, 
+                                        Vector3<float>{ 0.1,  0.1, 0.2  }, 
+                                        Vector3<float>{ 0.2,  -0.1, 0.0  }));
     manager.AddVessel(new Vessel());
 
     bool running = true;

@@ -22,6 +22,7 @@ void PhysicsEngine::SimulatePhysics(float delta_time) {
             }
 
             uint32_t index = kCollisionDetectIndexTable[lhs->type][rhs->type];
+// printf("%u %u %u\n", lhs->type, rhs->type, index);
             if (index == kInvalidIndex) {
                 continue;
             }

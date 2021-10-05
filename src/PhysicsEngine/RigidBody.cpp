@@ -29,7 +29,7 @@ BoxBody::BoxBody(IPhysicsEntity* entity,
                  const Vector3<float>& size,
                  const Vector3<float>& velocity,
                  float mass)
-    : RigidBody{kSphereBodyType, entity, velocity, mass},
+    : RigidBody{kBoxBodyType, entity, velocity, mass},
       center{center},
       size{size} {}
 

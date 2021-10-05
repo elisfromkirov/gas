@@ -1,7 +1,7 @@
 #include "Camera.hpp"
 
 Camera::Camera() : right_{0.f, 1.f, 0.f}, up_{0.f, 0.f, 1.f}, forward_{1.f, 0.f, 0.f},
-                   position_{0.f, 0.f, -4.f}, view_matrix_{} {
+                   position_{0.f, 0.f, -3.f}, view_matrix_{} {
     UpdateVeiwMatrix();
 }
 

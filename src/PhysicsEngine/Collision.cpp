@@ -8,6 +8,16 @@ static bool IsEqual(float lhs, float rhs) {
 
 #include "Collision.hpp"
 
+static uint32_t kNormalesCount = 6;
+static Vector3<float> kNormales[] = {
+    Vector3<float>{ 1.0,  0.0,  0.0},
+    Vector3<float>{-1.0,  0.0,  0.0},
+    Vector3<float>{ 0.0,  1.0,  0.0},
+    Vector3<float>{ 0.0, -1.0,  0.0},
+    Vector3<float>{ 0.0,  0.0,  1.0},
+    Vector3<float>{ 0.0,  0.0, -1.0}
+};
+
 bool CollisionDetectSphereSphere(RigidBody* lhs, RigidBody* rhs, float delta_time, float* time) {
     assert(lhs != nullptr);
     assert(rhs != nullptr);
@@ -18,19 +28,21 @@ bool CollisionDetectSphereSphere(RigidBody* lhs, RigidBody* rhs, float delta_tim
     Vector3<float> center_difference  {first_sphere->center   - second_sphere->center  };
     Vector3<float> velocity_difference{first_sphere->velocity - second_sphere->velocity};
     
-    float distanse = first_sphere->radius + second_sphere->radius;
+    float distance = first_sphere->radius + second_sphere->radius;
 
     float a = DotProduct(velocity_difference, velocity_difference);
     float b = DotProduct(velocity_difference, center_difference  );
-    float c = DotProduct(center_difference,   center_difference  ) - distanse * distanse;
+    float c = DotProduct(center_difference,   center_difference  ) - distance * distance;
     float d = b * b - a * c;
 
-    if (d < 0.0f) {
+    if (d < 0.0) {
         return false;
     }
 
-    float roots[] = {std::min((-b - sqrt(d))/a, (-b + sqrt(d))/a),
-                     std::max((-b - sqrt(d))/a, (-b + sqrt(d))/a)};
+    float roots[] = {
+        std::min((-b - sqrt(d))/a, (-b + sqrt(d))/a),
+        std::max((-b - sqrt(d))/a, (-b + sqrt(d))/a)
+    };
 
     if (0.f < roots[0] && roots[0] < delta_time) {
         *time = roots[0];
@@ -58,9 +70,30 @@ bool CollisionDetectBoxBox(RigidBody* lhs, RigidBody* rhs, float delta_time, flo
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 
-    // TODO: Write code!
+    BoxBody* first_box  = reinterpret_cast<BoxBody*>(lhs);
+    BoxBody* second_box = reinterpret_cast<BoxBody*>(rhs);
 
-    return false;
+    Vector3<float> center_difference  {first_box->center      - second_box->center -
+                                    first_box->size * 0.5f - second_box->size * 0.5f };
+    Vector3<float> velocity_difference{first_box->velocity    - second_box->velocity };
+
+    float collision_time = delta_time;
+
+    for (uint32_t i = 0; i < kNormalesCount; ++i) {
+        float product = -DotProduct(kNormales[i], velocity_difference);
+        if (!IsEqual(product, 0.0)) {
+            float t = DotProduct(kNormales[i], center_difference) / product;
+            if (0.f < t && t < collision_time) {
+                collision_time = t;
+            }
+        }
+    }
+    if (IsEqual(collision_time, delta_time)) {
+        return false;
+    }
+
+    *time = collision_time;
+    return true;
 }
 
 bool CollisionDetectSphereWall(RigidBody* lhs, RigidBody* rhs, float delta_time, float* time) {
@@ -97,13 +130,15 @@ bool CollisionDetectBoxWall(RigidBody* lhs, RigidBody* rhs, float delta_time, fl
         return false;
     }
 
-    float t = DotProduct(wall->normal, wall->point + wall->normal * DotProduct(wall->normal, box->size) - box->center) / product;
+    float t = DotProduct(wall->normal, 
+                         wall->point - box->center +
+                         wall->normal * fabs(DotProduct(wall->normal, box->size) * 0.5f)) / product;
     if (t < 0.f || delta_time < t) {
         return false;
     }
 
     *time = t;
-    return false;
+    return true;
 }
 
 bool CollisionDetectWallWall(RigidBody* lhs, RigidBody* rhs, float delta_time, float* time) {
@@ -147,7 +182,32 @@ void CollisionResponseBoxBox(RigidBody* lhs, RigidBody* rhs, float collision_tim
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 
-    // TODO: Write code!
+    BoxBody* first_box  = reinterpret_cast<BoxBody*>(lhs);
+    BoxBody* second_box = reinterpret_cast<BoxBody*>(rhs);
+
+    Vector3<float> center_difference  {first_box->center      - second_box->center -
+                                       first_box->size * 0.5f - second_box->size * 0.5f };
+    Vector3<float> velocity_difference{first_box->velocity    - second_box->velocity    };
+
+    uint32_t normal_index = 0;
+    for (uint32_t i = 0; i < kNormalesCount; ++i) {
+        if (IsEqual(DotProduct(kNormales[i], center_difference), 
+                    DotProduct(kNormales[i], velocity_difference) * collision_time * (-1.0))) {
+            normal_index = i;
+        }
+    }
+    Vector3<float> normal{kNormales[normal_index]};
+
+    Vector3<float> first_velocity {normal * DotProduct(first_box->velocity,  normal)};
+    Vector3<float> second_velocity{normal * DotProduct(second_box->velocity, normal)};
+
+    first_box->velocity += 
+        (second_velocity - first_velocity) * 
+        (2.f * second_box->mass / (second_box->mass + second_box->mass));
+
+    second_box->velocity += 
+        (first_velocity - second_velocity) * 
+        (2.f * first_box->mass / (second_box->mass + second_box->mass));
 }
 
 void CollisionResponseSphereWall(RigidBody* lhs, RigidBody* rhs, float collision_time) {

@@ -5,7 +5,7 @@
 Material BoxMolecule::material{Color{0.0, 0.1, 0.0},
                                Color{0.0, 0.5, 0.2},
                                Color{0.1, 0.4, 0.1},
-                               200};
+                               80};
 
 BoxMolecule::BoxMolecule(const Vector3<float>& center, const Vector3<float>& size,
                          const Vector3<float>& velocity)
