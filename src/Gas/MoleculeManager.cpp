@@ -14,16 +14,16 @@ void MoleculeManager::AddMolecule(IMolecule* molecule) {
     assert(molecule != nullptr);
 
     molecules_.push_back(molecule);
-    molecule->GetGraphicsComponent()->RegisterOnScene(scene_);
-    molecule->GetPhysicsComponent()->RegisterOnPhysicsEngine(physics_engine_);
+    molecule->RegisterOnScene(scene_);
+    molecule->RegisterOnPhysicsEngine(physics_engine_);
 }
 
 void MoleculeManager::AddVessel(Vessel* vessel) {
     assert(vessel != nullptr);
 
     vessel_ = vessel;
-    vessel_->GetGraphicsComponent()->RegisterOnScene(scene_);
-    vessel->GetPhysicsComponent()->RegisterOnPhysicsEngine(physics_engine_);
+    vessel_->RegisterOnScene(scene_);
+    vessel_->RegisterOnPhysicsEngine(physics_engine_);
 }
 
 void MoleculeManager::DrawMolecules() {

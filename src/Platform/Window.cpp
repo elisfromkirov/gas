@@ -1,5 +1,9 @@
 #include "Window.hpp"
 
+Window::Window(const char* title)
+    : Window(title, kDefaultXPos, kDefaultYPos, kDefaultWindowWidth, kDefaultWindowHeight) {}
+
+
 Window::Window(const char* title, uint32_t x_pos, uint32_t y_pos, uint32_t width, uint32_t height)
     : window_{nullptr}, title_{title}, x_pos_{x_pos}, y_pos_{y_pos}, width_{width}, 
       height_{height}, surface_{nullptr} {

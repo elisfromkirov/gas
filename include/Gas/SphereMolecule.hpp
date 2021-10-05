@@ -1,17 +1,17 @@
-#ifndef __VESSEL_HPP__
-#define __VESSEL_HPP__
+#ifndef __MOLECULE_HPP__
+#define __MOLECULE_HPP__
 
 #include "IMolecule.hpp"
 #include "RigidBody.hpp"
-#include "Surface.hpp"
+#include "Sphere.hpp"
 
-class Vessel : public IGraphicsEntity, public IPhysicsEntity {
+class SphereMolecule : public IMolecule {
 private:
-    static Material wall;
+    static Material material;    
 
 public:
-    Vessel();
-    virtual ~Vessel() override;
+    SphereMolecule(const Vector3<float>& center, float radius, const Vector3<float>& velocity);
+    virtual ~SphereMolecule() override;
 
     virtual void RegisterOnScene(Scene* scene) override;
     virtual void UnregisterOnScene(Scene* scene) override;
@@ -24,18 +24,8 @@ public:
     virtual void CollisionResponse(IPhysicsEntity* entity) override;
 
 private:
-    Surface far_;
-    Surface left_;
-    Surface right_;
-    Surface top_;
-    Surface bottom_;
-      
-    WallBody far_wall_;
-    WallBody near_wall_;
-    WallBody left_wall_;
-    WallBody right_wall_;
-    WallBody top_wall_;
-    WallBody bottom_wall_;
+    Sphere     graphics_component_;
+    SphereBody physics_component_;
 };
 
-#endif // __VESSEL_HPP__
+#endif // __MOLECULE_HPP__

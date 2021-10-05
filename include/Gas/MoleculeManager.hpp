@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-#include "Molecule.hpp"
+#include "IMolecule.hpp"
 #include "RayTracer.hpp"
 #include "Scene.hpp"
 #include "PhysicsEngine.hpp"

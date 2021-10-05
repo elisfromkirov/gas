@@ -20,8 +20,8 @@ target_sources(GasPhysics
 
 target_link_libraries(GasPhysics
     PUBLIC
-        GasMath
-        GasComponents
+        GasGas    
+        GasMath    
     PRIVATE
         m
     )

@@ -8,20 +8,18 @@
 #include "Surface.hpp"
 #include "RayTracer.hpp"
 
-#include "Molecule.hpp"
+#include "BoxMolecule.hpp"
+#include "SphereMolecule.hpp"
+#include "Vessel.hpp"
 #include "MoleculeManager.hpp"
 
 #include "Window.hpp"
 
-const uint32_t kWindowWidth{800};
-const uint32_t kWindowHeight{600};
-
-const Material material{Color{0.1, 0.0, 0.0}, Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 100}; 
-
 void SetFPS(Window& window, clock_t begin, clock_t end);
+void FillVessel(MoleculeManager& manager);
 
 int main() {
-    Window window{"ray tracer", 0, 0, kWindowWidth, kWindowHeight};
+    Window window{"ray tracer"};
 
     RayTracer ray_tracer{window.GetWindowSurface()};
     Scene scene{};
@@ -39,13 +37,7 @@ int main() {
     PhysicsEngine physics_engine{};
 
     MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
-
-    manager.AddMolecule(new SphereMolecule(Vector3<float>{0.5, 0.0, 0.0}, 0.1, Vector3<float>{0.4, -0.3, 0.4}, &material));
-    manager.AddMolecule(new SphereMolecule(Vector3<float>{0.0, 0.5, 0.0}, 0.1, Vector3<float>{0.4, 0.0, 0.3}, &material));
-    manager.AddMolecule(new SphereMolecule(Vector3<float>{-0.05, -0.7, -0.05}, 0.1, Vector3<float>{0.0,  0.3, 0.0}, &material));
-    manager.AddMolecule(new SphereMolecule(Vector3<float>{ 0.05,  0.7,  0.05}, 0.1, Vector3<float>{0.0, -0.3, 0.0}, &material));
-
-    manager.AddVessel(new Vessel());
+    FillVessel(manager);
 
     bool running = true;
     while (running) {
@@ -78,4 +70,23 @@ void SetFPS(Window& window, clock_t begin, clock_t end) {
     sprintf(buffer, "%lg", float(CLOCKS_PER_SEC)/float(end - begin));
     
     window.SetTitle(buffer);
+}
+
+void FillVessel(MoleculeManager& manager) {
+    const uint32_t kMoleculesCount{8};
+
+    for (uint32_t i = 0; i < kMoleculesCount; ++i) {
+        Vector3<float> center{};
+        center.x = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
+        center.y = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
+        center.z = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
+
+        Vector3<float> velocity{};
+        velocity.x = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
+        velocity.y = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
+        velocity.z = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
+
+        manager.AddMolecule(new SphereMolecule(center, 0.1, velocity));
+    }
+    manager.AddVessel(new Vessel());
 }

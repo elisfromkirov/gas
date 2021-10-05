@@ -3,13 +3,15 @@
 
 #include "Vector3.hpp"
 
-class IPhysicsComponent;
+class PhysicsEngine;
 
 class IPhysicsEntity {
 public:
     virtual ~IPhysicsEntity() {}
 
-    virtual IPhysicsComponent* GetPhysicsComponent() = 0;
+    virtual void RegisterOnPhysicsEngine(PhysicsEngine* physics_engine) = 0;
+    
+    virtual void UnregisterOnPhysicsEngine(PhysicsEngine* physics_engine) = 0;
 
     virtual void Move(const Vector3<float>& displacement) = 0;
 
