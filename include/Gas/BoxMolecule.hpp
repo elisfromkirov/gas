@@ -1,13 +1,19 @@
 #ifndef __BOX_MOLECULE_HPP__
 #define __BOX_MOLECULE_HPP__
 
+#include <cassert>
+
 #include "Box.hpp"
 #include "IMolecule.hpp"
 #include "RigidBody.hpp"
 
 class BoxMolecule : public IMolecule {
+private:
+    static Material material;
+
 public:
-    BoxMolecule(const Vector3<float>& center, float radius, const Vector3<float>& velocity);
+    BoxMolecule(const Vector3<float>& center, const Vector3<float>& size,
+                const Vector3<float>& velocity);
     virtual ~BoxMolecule() override;
 
     virtual void RegisterOnScene(Scene* scene) override;

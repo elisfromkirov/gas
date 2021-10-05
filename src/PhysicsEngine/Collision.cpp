@@ -71,11 +71,11 @@ bool CollisionDetectSphereWall(RigidBody* lhs, RigidBody* rhs, float delta_time,
     WallBody*   wall   = reinterpret_cast<WallBody*>  (rhs);
 
     float product = DotProduct(wall->normal, sphere->velocity);
-    if (IsEqual(product, 0.f)) {
+    if (IsEqual(product, 0.0)) {
         return false;
     }
 
-    float t = DotProduct(wall->normal,
+    float t = DotProduct(wall->normal, 
                          wall->point + wall->normal * sphere->radius - sphere->center) / product;
     if (t < 0.f || delta_time < t) {
         return false;
@@ -89,8 +89,20 @@ bool CollisionDetectBoxWall(RigidBody* lhs, RigidBody* rhs, float delta_time, fl
     assert(lhs != nullptr);
     assert(rhs != nullptr);
 
-    // TODO: Write code!
+    BoxBody*  box  = reinterpret_cast<BoxBody*> (lhs);
+    WallBody* wall = reinterpret_cast<WallBody*>(rhs);
 
+    float product = DotProduct(wall->normal, box->velocity);
+    if (IsEqual(product, 0.0)) {
+        return false;
+    }
+
+    float t = DotProduct(wall->normal, wall->point + wall->normal * DotProduct(wall->normal, box->size) - box->center) / product;
+    if (t < 0.f || delta_time < t) {
+        return false;
+    }
+
+    *time = t;
     return false;
 }
 
@@ -152,7 +164,10 @@ void CollisionResponseBoxWall(RigidBody* lhs, RigidBody* rhs, float collision_ti
     assert(lhs != nullptr);
     assert(rhs != nullptr);
     
-    // TODO: Write code!
+    BoxBody*  box  = reinterpret_cast<BoxBody*> (lhs);
+    WallBody* wall = reinterpret_cast<WallBody*>(rhs);
+
+    box->velocity -= wall->normal * (2.f * DotProduct(wall->normal, box->velocity));
 }
 
 void CollisionResponseWallWall(RigidBody* lhs, RigidBody* rhs, float collision_time) {

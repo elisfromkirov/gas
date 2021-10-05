@@ -1,6 +1,8 @@
 #ifndef __MOLECULE_HPP__
 #define __MOLECULE_HPP__
 
+#include <cassert>
+
 #include "IMolecule.hpp"
 #include "RigidBody.hpp"
 #include "Sphere.hpp"

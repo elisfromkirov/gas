@@ -37,12 +37,13 @@ int main() {
     PhysicsEngine physics_engine{};
 
     MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
-    FillVessel(manager);
+    manager.AddMolecule(new BoxMolecule(Vector3<float>{0.5, 0.3, 0.2}, 
+                                        Vector3<float>{0.2, 0.2, 0.2}, 
+                                        Vector3<float>{-0.1, 0.2, 0.4}));
+    manager.AddVessel(new Vessel());
 
     bool running = true;
     while (running) {
-        clock_t time = clock();
-
         SDL_Event event{};
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -55,8 +56,6 @@ int main() {
         manager.MoveMolecules(0.1);
 
         window.UpdateWindowSurface();
-
-        SetFPS(window, time, clock());
     }
 
     return 0;

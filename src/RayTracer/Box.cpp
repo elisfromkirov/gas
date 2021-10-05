@@ -95,3 +95,15 @@ bool Box::BoxSideRayIntersect(uint32_t index, const Ray& ray, float* t) const {
     *t = p;
     return true;
 }
+
+const Vector3<float>& Box::GetCenter() const {
+    return center_;
+}
+
+void Box::SetCenter(const Vector3<float>& center) {
+    for (uint32_t i = 0; i < kSurfaceCount; ++i) {
+        surfaces_[i].world_space.point += center - center_;
+    }
+
+    center_ = center;
+}

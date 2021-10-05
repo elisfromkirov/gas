@@ -1,6 +1,8 @@
 #ifndef __VESSEL_HPP__
 #define __VESSEL_HPP__
 
+#include <cassert>
+
 #include "IMolecule.hpp"
 #include "RigidBody.hpp"
 #include "Surface.hpp"

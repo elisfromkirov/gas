@@ -11,7 +11,8 @@ SphereMolecule::SphereMolecule(const Vector3<float>& center,
                                float radius,
                                const Vector3<float>& velocity)
     : graphics_component_{center, radius, &material},
-      physics_component_{this, center, radius, velocity, 1.f} {}
+      physics_component_{this, center, radius, velocity, 1.0}
+    {}
 
 SphereMolecule::~SphereMolecule() {}
 
