@@ -13,15 +13,10 @@
 
 #include "Window.hpp"
 
-const uint32_t kWindowWidth{800};
-const uint32_t kWindowHeight{600};
-
-const Material material{Color{0.1, 0.0, 0.0}, Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 100}; 
-
 void SetFPS(Window& window, clock_t begin, clock_t end);
 
 int main() {
-    Window window{"ray tracer", 0, 0, kWindowWidth, kWindowHeight};
+    Window window{"ray tracer", 0, 0, 800, 600};
 
     RayTracer ray_tracer{window.GetWindowSurface()};
     Scene scene{};
@@ -37,6 +32,8 @@ int main() {
     scene.RegisterLightSource(&light_sources[1]);
 
     PhysicsEngine physics_engine{};
+
+    Material material{Color{0.1, 0.0, 0.0}, Color{0.5, 0.0, 0.2}, Color{0.5, 0.3, 0.0}, 100}; 
 
     MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
 
