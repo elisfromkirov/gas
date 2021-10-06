@@ -6,18 +6,6 @@ static bool IsEqual(float lhs, float rhs) {
     return fabs(lhs - rhs) < FLT_EPSILON;
 }
 
-#define PRINT(...) printf(__VA_ARGS__)
-#define PRINT_VECTOR(__v__) printf("%s = {%lg %lg %lg}\n", #__v__, __v__.x, __v__.y, __v__.z)
-
-// PRINT("%lg\n", collision_time);
-// PRINT_VECTOR(first_box->center);
-// PRINT_VECTOR(second_box->center);
-// PRINT_VECTOR(first_box->velocity);
-// PRINT_VECTOR(second_box->velocity);
-// PRINT_VECTOR(center_difference);
-// PRINT_VECTOR(velocity_difference);
-// PRINT("\n");
-
 #include "Collision.hpp"
 
 static uint32_t kNormalesCount = 6;
@@ -135,6 +123,7 @@ bool CollisionDetectBoxBox(RigidBody* lhs, RigidBody* rhs, float delta_time, flo
             }
         }
     }
+
     if (IsEqual(collision_time, delta_time)) {
         return false;
     }
