@@ -14,8 +14,6 @@ public:
     virtual void UnregisterOnPhysicsEngine(PhysicsEngine* physics_engine) = 0;
 
     virtual void Move(const Vector3<float>& displacement) = 0;
-
-    virtual void CollisionResponse(IPhysicsEntity* entity) = 0;
 };
 
 #endif // __I_PHYSICS_ENTITY_HPP__

@@ -30,6 +30,10 @@ void MoleculeManager::DrawMolecules() {
     ray_tracer_->Trace(scene_);
 }
 
-void MoleculeManager::MoveMolecules(float delta_time) {
+void MoleculeManager::SimulateMoleculesPhysics(float delta_time) {
     physics_engine_->SimulatePhysics(delta_time);
+}
+
+void MoleculeManager::SimulateMoleculesChemistry() {
+    
 }

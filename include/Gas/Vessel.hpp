@@ -23,8 +23,6 @@ public:
 
     virtual void Move(const Vector3<float>& displacement) override;
 
-    virtual void CollisionResponse(IPhysicsEntity* entity) override;
-
 private:
     Surface far_;
     Surface left_;

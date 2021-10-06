@@ -11,7 +11,8 @@ SphereMolecule::SphereMolecule(const Vector3<float>& center,
                                float radius,
                                const Vector3<float>& velocity)
     : graphics_component_{center, radius, &material},
-      physics_component_{this, center, radius, velocity, 1.0}
+      physics_component_{this, center, radius, velocity, 1.0},
+      is_valid_{true}
     {}
 
 SphereMolecule::~SphereMolecule() {}
@@ -22,7 +23,11 @@ void SphereMolecule::RegisterOnScene(Scene* scene) {
     scene->RegisterPrimitive(&graphics_component_);
 }
 
-void SphereMolecule::UnregisterOnScene(Scene* scene) {}
+void SphereMolecule::UnregisterOnScene(Scene* scene) {
+    assert(scene != nullptr);
+
+    scene->UnregisterPrimitive(&graphics_component_);
+}
 
 void SphereMolecule::RegisterOnPhysicsEngine(PhysicsEngine* physics_engine) {
     assert(physics_engine != nullptr);
@@ -30,10 +35,12 @@ void SphereMolecule::RegisterOnPhysicsEngine(PhysicsEngine* physics_engine) {
     physics_engine->RegisterRigidBody(&physics_component_);
 }
 
-void SphereMolecule::UnregisterOnPhysicsEngine(PhysicsEngine* physics_engine) {}
+void SphereMolecule::UnregisterOnPhysicsEngine(PhysicsEngine* physics_engine) {
+    assert(physics_engine != nullptr);
+
+    physics_engine->UnregisterRigidBody(&physics_component_);
+}
 
 void SphereMolecule::Move(const Vector3<float>& displacement) {
     graphics_component_.SetCenter(graphics_component_.GetCenter() + displacement);
 }
-
-void SphereMolecule::CollisionResponse(IPhysicsEntity* entity) {}

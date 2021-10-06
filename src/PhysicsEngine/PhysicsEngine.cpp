@@ -9,6 +9,17 @@ void PhysicsEngine::RegisterRigidBody(RigidBody* rigid_body) {
     rigid_bodies_.push_back(rigid_body);
 }
 
+void PhysicsEngine::UnregisterRigidBody(RigidBody* rigid_body) {
+    assert(rigid_body != nullptr);
+
+    for (uint32_t i = 0; i < rigid_bodies_.size(); ++i) {
+        if (rigid_bodies_.at(i) == rigid_body) {
+            rigid_bodies_.at(i) = rigid_bodies_.back();
+            rigid_bodies_.pop_back();
+        }
+    }
+}
+
 void PhysicsEngine::SimulatePhysics(float delta_time) {
     std::vector<Collision> collisions(rigid_bodies_.size());
 
@@ -22,7 +33,6 @@ void PhysicsEngine::SimulatePhysics(float delta_time) {
             }
 
             uint32_t index = kCollisionDetectIndexTable[lhs->type][rhs->type];
-// printf("%u %u %u\n", lhs->type, rhs->type, index);
             if (index == kInvalidIndex) {
                 continue;
             }

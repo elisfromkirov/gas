@@ -12,6 +12,17 @@ void Scene::RegisterPrimitive(IPrimitive* primitive) {
     primitives_.push_back(primitive);
 }
 
+void Scene::UnregisterPrimitive(IPrimitive* primitive) {
+    assert(primitive != nullptr);
+
+    for (uint32_t i = 0; i < primitives_.size(); ++i) {
+        if (primitives_.at(i) == primitive) {
+            primitives_.at(i) = primitives_.back();
+            primitives_.pop_back();
+        }
+    }
+}
+
 void Scene::RegisterLightSource(LightSource* light_source) {
     assert(light_source != nullptr);
 

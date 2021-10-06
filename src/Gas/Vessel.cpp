@@ -49,5 +49,3 @@ void Vessel::RegisterOnPhysicsEngine(PhysicsEngine* physics_engine) {
 void Vessel::UnregisterOnPhysicsEngine(PhysicsEngine* physics_engine) {}
 
 void Vessel::Move(const Vector3<float>& displacement) {}
-
-void Vessel::CollisionResponse(IPhysicsEntity* entity) {}

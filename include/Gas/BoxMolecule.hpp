@@ -15,6 +15,8 @@ public:
     BoxMolecule(const Vector3<float>& center, const Vector3<float>& size,
                 const Vector3<float>& velocity);
     virtual ~BoxMolecule() override;
+    
+    virtual bool IsValid() const override;
 
     virtual void RegisterOnScene(Scene* scene) override;
     virtual void UnregisterOnScene(Scene* scene) override;
@@ -24,11 +26,11 @@ public:
 
     virtual void Move(const Vector3<float>& displacement) override;
 
-    virtual void CollisionResponse(IPhysicsEntity* entity) override;
-
 private:
     Box     graphics_component_;
     BoxBody physics_component_;
+
+    bool is_valid_;
 };
 
 #endif // __BOX_MOLECULE_HPP__

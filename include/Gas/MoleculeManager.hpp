@@ -2,6 +2,7 @@
 #define __SHAPE_MANAGER_HPP__
 
 #include <cassert>
+#include <vector>
 
 #include "IMolecule.hpp"
 #include "RayTracer.hpp"
@@ -19,10 +20,12 @@ public:
 
     void DrawMolecules();
     
-    void MoveMolecules(float delta_time);
+    void SimulateMoleculesPhysics(float delta_time);
+
+    void SimulateMoleculesChemistry();
 
 private:
-    std::list<IMolecule*> molecules_;
+    std::vector<IMolecule*> molecules_;
     Vessel* vessel_;
 
     RayTracer*            ray_tracer_;

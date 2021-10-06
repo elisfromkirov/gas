@@ -23,8 +23,6 @@ public:
 
     virtual void Move(const Vector3<float>& displacement) override;
 
-    virtual void CollisionResponse(IPhysicsEntity* entity) override;
-
 private:
     Sphere     graphics_component_;
     SphereBody physics_component_;

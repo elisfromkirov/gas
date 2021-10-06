@@ -11,7 +11,8 @@
 class PhysicsEngine {
 public:
     void RegisterRigidBody(RigidBody* rigid_body);
-    
+    void UnregisterRigidBody(RigidBody* rigid_body);
+
     void SimulatePhysics(float delta_time);
 
 private:

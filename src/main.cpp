@@ -16,7 +16,7 @@
 #include "Window.hpp"
 
 void SetFPS(Window& window, clock_t begin, clock_t end);
-void FillVessel(MoleculeManager& manager);
+void FillVessel(MoleculeManager& molecule_manager);
 
 int main() {
     Window window{"ray tracer"};
@@ -32,8 +32,8 @@ int main() {
 
     PhysicsEngine physics_engine{};
 
-    MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
-    FillVessel(manager);
+    MoleculeManager molecule_manager{&ray_tracer, &scene, &physics_engine};
+    FillVessel(molecule_manager);
 
     bool running = true;
     while (running) {
@@ -44,9 +44,11 @@ int main() {
             }
         }
 
-        manager.DrawMolecules();
+        molecule_manager.DrawMolecules();
 
-        manager.MoveMolecules(0.1);
+        molecule_manager.SimulateMoleculesPhysics(0.1);
+
+        molecule_manager.SimulateMoleculesChemistry();
 
         window.UpdateWindowSurface();
     }
@@ -67,7 +69,7 @@ void SetFPS(Window& window, clock_t begin, clock_t end) {
 const uint32_t kSphereMoleculesCount{4};
 const uint32_t kBoxMoleculesCount{2};
 
-void FillVessel(MoleculeManager& manager) {
+void FillVessel(MoleculeManager& molecule_manager) {
     for (uint32_t i = 0; i < kSphereMoleculesCount; ++i) {
         Vector3<float> center{};
         center.x = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
@@ -79,7 +81,7 @@ void FillVessel(MoleculeManager& manager) {
         velocity.y = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
         velocity.z = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
 
-        manager.AddMolecule(new SphereMolecule(center, 0.1, velocity));
+        molecule_manager.AddMolecule(new SphereMolecule(center, 0.1, velocity));
     }
 
     for (uint32_t i = 0; i < kBoxMoleculesCount; ++i) {
@@ -93,8 +95,10 @@ void FillVessel(MoleculeManager& manager) {
         velocity.y = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
         velocity.z = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
 
-        manager.AddMolecule(new BoxMolecule(center, Vector3<float>{0.2, 0.2, 0.2}, velocity));
+        Vector3<float> size{0.2, 0.2, 0.2};
+
+        molecule_manager.AddMolecule(new BoxMolecule(center, size, velocity));
     }
 
-    manager.AddVessel(new Vessel());
+    molecule_manager.AddVessel(new Vessel());
 }
