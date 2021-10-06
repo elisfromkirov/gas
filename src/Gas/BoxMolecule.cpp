@@ -10,8 +10,7 @@ Material BoxMolecule::material{Color{0.0, 0.1, 0.0},
 BoxMolecule::BoxMolecule(const Vector3<float>& center, const Vector3<float>& size,
                          const Vector3<float>& velocity)
     : graphics_component_{center, size, &material},
-      physics_component_{this, center, size, velocity, 1.0},
-      is_valid_{true}
+      physics_component_{this, center, size, velocity, 1.0}
     {}
 
 BoxMolecule::~BoxMolecule() {}

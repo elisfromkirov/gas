@@ -11,15 +11,18 @@ target_sources(GasPhysics
     PUBLIC
         ${INCROOT}/Collision.hpp
         ${INCROOT}/PhysicsEngine.hpp
+        ${INCROOT}/PhysicsEvent.hpp
         ${INCROOT}/RigidBody.hpp
     PRIVATE
         Collision.cpp
         PhysicsEngine.cpp
+        PhysicsEvent.cpp
         RigidBody.cpp
     )
 
 target_link_libraries(GasPhysics
     PUBLIC
+        GasEvent
         GasGas    
         GasMath    
     PRIVATE

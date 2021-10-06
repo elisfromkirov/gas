@@ -1,18 +1,18 @@
 #include <ctime>
 #include <cstring>
 
+#include "EventManager.hpp"
+#include "IEvent.hpp"
 #include "Box.hpp"
 #include "Camera.hpp"
 #include "Sphere.hpp"
 #include "Scene.hpp"
 #include "Surface.hpp"
 #include "RayTracer.hpp"
-
 #include "BoxMolecule.hpp"
 #include "SphereMolecule.hpp"
 #include "Vessel.hpp"
 #include "MoleculeManager.hpp"
-
 #include "Window.hpp"
 
 void SetFPS(Window& window, clock_t begin, clock_t end);
@@ -30,10 +30,19 @@ int main() {
     LightSource light_source(Vector3<float>{1.9,  0.4f, -0.4f}, Color{1.0, 1.0, 1.0});
     scene.RegisterLightSource(&light_source);
 
-    PhysicsEngine physics_engine{};
+    EventManager event_manager{};
+
+    PhysicsEngine physics_engine{&event_manager};
 
     MoleculeManager molecule_manager{&ray_tracer, &scene, &physics_engine};
-    FillVessel(molecule_manager);
+    event_manager.RegisterListener(&molecule_manager, kCollisionEventCategory);
+    
+    molecule_manager.AddMolecule(new SphereMolecule(Vector3<float>{0.0,  0.4, 0.0}, 0.1, Vector3<float>{0.0, -0.4, 0.0}));
+    molecule_manager.AddMolecule(new SphereMolecule(Vector3<float>{0.0, -0.4, 0.0}, 0.1, Vector3<float>{0.0,  0.4, 0.0}));
+
+    molecule_manager.AddVessel(new Vessel());
+
+    // FillVessel(molecule_manager);
 
     bool running = true;
     while (running) {
@@ -48,7 +57,7 @@ int main() {
 
         molecule_manager.SimulateMoleculesPhysics(0.1);
 
-        molecule_manager.SimulateMoleculesChemistry();
+        event_manager.DispatchAllEvents();
 
         window.UpdateWindowSurface();
     }

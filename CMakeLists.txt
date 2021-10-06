@@ -18,6 +18,7 @@ target_sources(Gas
 
 target_link_libraries(Gas
     PUBLIC
+        GasEvent
         GasGas
         GasPhysics
         Gas3DGraphics
@@ -26,6 +27,7 @@ target_link_libraries(Gas
         ${SDL2_LIBRARIES}
     )
 
+add_subdirectory(src/Event)
 add_subdirectory(src/Gas)
 add_subdirectory(src/PhysicsEngine)
 add_subdirectory(src/RayTracer)

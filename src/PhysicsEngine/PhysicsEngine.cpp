@@ -2,6 +2,12 @@
 
 #include "Collision.hpp"
 #include "PhysicsEngine.hpp"
+#include "PhysicsEvent.hpp"
+
+PhysicsEngine::PhysicsEngine(EventManager* event_manager)
+    : event_manager_{event_manager} {}
+
+PhysicsEngine::~PhysicsEngine() {}
 
 void PhysicsEngine::RegisterRigidBody(RigidBody* rigid_body) {
     assert(rigid_body != nullptr);
@@ -82,6 +88,8 @@ void PhysicsEngine::SimulatePhysics(float delta_time) {
 
             rhs->Move(rhs_displacement);
             rhs->entity->Move(rhs_displacement);
+
+            event_manager_->SendEvent<CollisionEvent>(lhs->entity, rhs->entity);
         } else {
             RigidBody* rigid_body = rigid_bodies_.at(i);
             

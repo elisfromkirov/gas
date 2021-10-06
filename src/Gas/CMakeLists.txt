@@ -25,6 +25,7 @@ target_sources(GasGas
 
 target_link_libraries(GasGas
     PUBLIC
+        GasEvent
         GasMath
         Gas3DGraphics
         GasPhysics
