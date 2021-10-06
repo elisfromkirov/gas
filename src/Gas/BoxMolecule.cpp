@@ -3,8 +3,8 @@
 #include "PhysicsEngine.hpp"
 
 Material BoxMolecule::material{Color{0.0, 0.1, 0.0},
-                               Color{0.0, 0.5, 0.2},
-                               Color{0.1, 0.4, 0.1},
+                               Color{0.0, 0.3, 0.2},
+                               Color{0.1, 0.3, 0.3},
                                80};
 
 BoxMolecule::BoxMolecule(const Vector3<float>& center, const Vector3<float>& size,

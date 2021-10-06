@@ -27,26 +27,13 @@ int main() {
     Camera camera{};
     scene.RegisterCamera(&camera);
 
-    LightSource light_sources[] = {
-        LightSource(Vector3<float>{1.9,  0.9f, -0.9f}, Color{1.0, 1.0, 1.0}),
-        LightSource(Vector3<float>{1.9, -0.9f, -0.9f}, Color{1.0, 1.0, 1.0})
-    };
-    scene.RegisterLightSource(&light_sources[0]);
-    scene.RegisterLightSource(&light_sources[1]);
+    LightSource light_source(Vector3<float>{1.9,  0.4f, -0.4f}, Color{1.0, 1.0, 1.0});
+    scene.RegisterLightSource(&light_source);
 
     PhysicsEngine physics_engine{};
 
     MoleculeManager manager{&ray_tracer, &scene, &physics_engine};
-    manager.AddMolecule(new BoxMolecule(Vector3<float>{ 0.0,  0.8, 0.05 }, 
-                                        Vector3<float>{ 0.1,  0.1, 0.2  }, 
-                                        Vector3<float>{ 0.1, -0.2, 0.0  }));
-    manager.AddMolecule(new BoxMolecule(Vector3<float>{ 0.0, -0.8, -0.05}, 
-                                        Vector3<float>{ 0.1,  0.2, 0.2  }, 
-                                        Vector3<float>{ 0.1,  0.2, 0.0  }));
-    manager.AddMolecule(new BoxMolecule(Vector3<float>{-0.5,  0.0, 0.0 }, 
-                                        Vector3<float>{ 0.1,  0.1, 0.2  }, 
-                                        Vector3<float>{ 0.2,  -0.1, 0.0  }));
-    manager.AddVessel(new Vessel());
+    FillVessel(manager);
 
     bool running = true;
     while (running) {
@@ -77,10 +64,11 @@ void SetFPS(Window& window, clock_t begin, clock_t end) {
     window.SetTitle(buffer);
 }
 
-void FillVessel(MoleculeManager& manager) {
-    const uint32_t kMoleculesCount{8};
+const uint32_t kSphereMoleculesCount{4};
+const uint32_t kBoxMoleculesCount{2};
 
-    for (uint32_t i = 0; i < kMoleculesCount; ++i) {
+void FillVessel(MoleculeManager& manager) {
+    for (uint32_t i = 0; i < kSphereMoleculesCount; ++i) {
         Vector3<float> center{};
         center.x = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
         center.y = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
@@ -93,5 +81,20 @@ void FillVessel(MoleculeManager& manager) {
 
         manager.AddMolecule(new SphereMolecule(center, 0.1, velocity));
     }
+
+    for (uint32_t i = 0; i < kBoxMoleculesCount; ++i) {
+        Vector3<float> center{};
+        center.x = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
+        center.y = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
+        center.z = static_cast<float>(rand() % 8) * 0.2f - 0.8f;
+
+        Vector3<float> velocity{};
+        velocity.x = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
+        velocity.y = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
+        velocity.z = static_cast<float>(rand() % 16) * 0.025f - 0.2f;
+
+        manager.AddMolecule(new BoxMolecule(center, Vector3<float>{0.2, 0.2, 0.2}, velocity));
+    }
+
     manager.AddVessel(new Vessel());
 }
